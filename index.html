@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>WIN Tax & Bookkeeping Academy — Course Preview</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="app">
+  <div class="overlay" onclick="closeNav()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-badge"><img src="assets/logo.png" alt="WIN logo"/></div>
+      <div>
+        <div class="brand-name">WIN TAX ACADEMY</div>
+        <div class="brand-tag">Skills Are Wealth.</div>
+      </div>
+    </div>
+
+    <div class="tier-switch" id="tierSwitch"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Your progress</span><span id="progressPct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+
+    <nav class="course-map" id="courseMap"></nav>
+
+    <div class="sidebar-foot">
+      This is skills training. It does not by itself provide an IRS credential, PTIN, professional license, job, or authorization to prepare paid returns.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="openNav()" aria-label="Open course map">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="crumb" id="crumb"></div>
+      <div class="demo-pill" id="demoPill">Beginner tier preview</div>
+    </div>
+
+    <div class="lesson-pane" id="lessonPane"></div>
+
+    <div class="bottom-bar">
+      <div class="disclaimer">Client preview build — use the Beginner / Advanced switch in the sidebar to compare tiers. Not the live Payhip build.</div>
+      <button class="btn" id="nextBtn" onclick="goNext()">Mark complete &amp; next →</button>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
