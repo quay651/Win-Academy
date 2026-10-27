@@ -14,5 +14,6 @@ The full Beginner Tier (Start Here + 4 modules × 4 lessons) following Deja Mars
 - Every lesson is narrated (AI voice matched to the HeyGen presenter) with follow-along visuals: W-2 / 1099-NEC boxes and key ideas light up as they're explained, with captions and a read-along transcript
 - Practice checks, WIN Reviews, Capstone and Final Assessment with the builder answer keys
 - Progress is saved in the learner's browser
+- Student eBook *WIN at Taxes* (`beginner/ebook.pdf`): download from the sidebar, plus "Follow along in the eBook" page links on each lesson
 
 Open it at `/beginner/` on GitHub Pages. Narration clips live in `beginner/voice/` (one MP3 per script line). The guide in the video frame is a placeholder until the HeyGen avatar clips are rendered.
