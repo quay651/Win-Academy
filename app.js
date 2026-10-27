@@ -2,8 +2,8 @@
 
 let tier = 'beginner';
 let current = 0;
-const completed = { beginner: new Set(), advanced: new Set() };
-const quizState = { beginner: {}, advanced: {} };
+const completed = { beginner: new Set() };
+const quizState = { beginner: {} };
 
 function courseFor(t){ return DATA[t]; }
 function flatFor(t){
@@ -25,9 +25,7 @@ function switchTier(t){
 
 function renderTierSwitch(){
   const el = document.getElementById('tierSwitch');
-  el.innerHTML =
-    '<button class="tier-btn'+(tier==='beginner'?' active':'')+'" onclick="switchTier(\'beginner\')">Beginner</button>'+
-    '<button class="tier-btn'+(tier==='advanced'?' active':'')+'" onclick="switchTier(\'advanced\')">Advanced</button>';
+  if(el) el.remove();
 }
 
 function renderSidebar(){
@@ -117,7 +115,7 @@ function render(scrollTop){
   const lesson = flat[current];
   renderSidebar();
   document.getElementById('crumb').innerHTML = '<b>'+lesson.group+'</b> · '+lesson.title;
-  document.getElementById('demoPill').textContent = tier==='beginner' ? 'Beginner tier preview' : 'Advanced tier preview';
+  document.getElementById('demoPill').textContent = 'Beginner tier preview';
 
   const pane = document.getElementById('lessonPane');
   let html = '<div class="eyebrow">'+lesson.eyebrow+'</div><h1 class="lesson-h1">'+lesson.title+'</h1>';
