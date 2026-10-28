@@ -1,57 +1,702 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>WIN Tax & Bookkeeping Academy — Course Preview</title>
-<link rel="stylesheet" href="style.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WIN Tax Academy Beginner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: green course-map sidebar + lesson column (video stage, student work, quiz). WIN green/gold brand. */
+:root{
+  --paper:#FBF7EC; --paper-2:#F2ECDA; --surface:#FFFFFF;
+  --ink:#132A22; --ink-dim:#4B6459; --line:rgba(19,42,34,.14);
+  --green-900:#0E3B2E; --green-800:#123F30; --green-700:#175943; --green-600:#1F7154;
+  --gold-500:#C6A233; --gold-300:#E4C978; --gold-100:#F6EDC8;
+  --good:#1C6B4F; --good-bg:#E7F2EC; --bad:#A6402D; --bad-bg:#F7E6E1;
+  --f-display:'Fraunces',Georgia,serif; --f-body:'Inter',system-ui,-apple-system,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0D1915; --paper-2:#122921; --surface:#142B23; --ink:#EEEADA; --ink-dim:#AFC2B7; --line:rgba(238,234,218,.14);
+  --green-900:#0A241C; --green-800:#0F2E24; --green-700:#1E6B51; --green-600:#3C9A76;
+  --gold-500:#D9B94C; --gold-300:#EAD48A; --gold-100:#2B2510;
+  --good:#4FBF8E; --good-bg:#123226; --bad:#E0836E; --bad-bg:#33201B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0D1915; --paper-2:#122921; --surface:#142B23; --ink:#EEEADA; --ink-dim:#AFC2B7; --line:rgba(238,234,218,.14);
+  --green-900:#0A241C; --green-800:#0F2E24; --green-700:#1E6B51; --green-600:#3C9A76;
+  --gold-500:#D9B94C; --gold-300:#EAD48A; --gold-100:#2B2510;
+  --good:#4FBF8E; --good-bg:#123226; --bad:#E0836E; --bad-bg:#33201B; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-500);outline-offset:2px}
+h1,h2{font-family:var(--f-display);text-wrap:balance}
+
+.app{display:flex;min-height:100vh;max-width:1440px;margin:0 auto}
+
+/* Sidebar */
+.sidebar{width:300px;flex-shrink:0;background:#0E3B2E;color:#FBF7EC;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;padding:20px 18px 16px;border-bottom:1px solid rgba(230,214,155,.18)}
+.brand img{width:48px;height:48px;border-radius:12px;background:#fff;padding:4px;flex-shrink:0}
+.brand-name{font-size:14.5px;font-weight:700;letter-spacing:.06em;line-height:1.2}
+.brand-tag{font-size:10.5px;color:#E4C978;letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.prog{padding:14px 18px;border-bottom:1px solid rgba(230,214,155,.14)}
+.prog-l{display:flex;justify-content:space-between;font-size:11.5px;color:#E4C978;letter-spacing:.04em;margin-bottom:7px}
+.prog-t{height:6px;border-radius:99px;background:rgba(230,214,155,.16);overflow:hidden}
+.prog-f{height:100%;width:0;background:linear-gradient(90deg,#C6A233,#E4C978);transition:width .35s}
+nav.map{padding:6px 10px 18px;flex:1}
+.m-head{padding:14px 10px 6px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(246,237,200,.62);font-weight:700}
+.l-btn{width:100%;text-align:left;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;border:0;background:transparent;color:#FBF7EC;cursor:pointer;font-size:13.2px;line-height:1.3;margin-bottom:2px}
+.l-btn:hover{background:rgba(255,255,255,.07)}
+.l-btn.on{background:#175943;box-shadow:inset 0 0 0 1px rgba(230,214,155,.28)}
+.l-btn .dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(246,237,200,.4);font-size:10px;font-weight:700;color:rgba(246,237,200,.75)}
+.l-btn.done .dot{background:#C6A233;border-color:#C6A233;color:#0E3B2E}
+.l-btn .lt{flex:1;min-width:0}
+.l-btn .lg{display:block;font-size:9.5px;color:rgba(246,237,200,.55);text-transform:uppercase;letter-spacing:.06em;margin-top:1px}
+.ebook-side{margin:14px 18px 4px;padding:14px;border-radius:12px;background:rgba(251,247,236,.07);border:1px solid rgba(228,201,120,.3);display:flex;flex-direction:column;gap:10px}
+.ebook-side .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#E4C978;font-weight:700}
+.ebook-side .n{font-family:var(--f-display);font-weight:700;font-size:17px;line-height:1.2}
+.ebook-side .m{font-size:12px;color:rgba(246,237,200,.7)}
+.dl{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 16px;border-radius:99px;background:#C6A233;color:#0E3B2E;font-weight:700;font-size:13.5px;text-decoration:none;border:0;cursor:pointer}
+.dl:hover{background:#E4C978}
+.side-foot{padding:14px 18px 18px;font-size:10.5px;color:rgba(246,237,200,.6);border-top:1px solid rgba(230,214,155,.14);line-height:1.5}
+
+/* Main */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:var(--paper);border-bottom:1px solid var(--line);padding-block:12px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:12px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.menu-btn{display:none;width:38px;height:38px;border-radius:9px;border:1px solid var(--line);background:var(--surface);cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.crumb{font-size:12.5px;color:var(--ink-dim);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crumb b{color:var(--ink)}
+.tier{margin-left:auto;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);background:var(--gold-100);border:1px solid var(--gold-300);padding:4px 10px;border-radius:99px;white-space:nowrap}
+
+.pane{padding-block:26px 40px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px));max-width:920px;width:100%;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--green-600);font-weight:700}
+.l-h1{font-size:clamp(26px,4vw,36px);font-weight:700;line-height:1.12;margin:4px 0 0}
+.method{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-dim);font-weight:600}
+.method span.on{color:var(--ink);background:var(--gold-100);border:1px solid var(--gold-300);border-radius:99px;padding:3px 9px}
+.method span.off{padding:3px 0}
+.method i{font-style:normal;opacity:.5}
+
+/* Player */
+.player{container-type:inline-size;display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.stage{position:relative;aspect-ratio:16/9;max-width:100%;color:#FBF7EC;background:radial-gradient(120% 140% at 12% 0%,#1d6a50,#0E3B2E 62%);display:grid;grid-template-columns:1fr 21cqw;grid-template-rows:1fr auto;gap:2.2cqw 2.4cqw;padding:3.4cqw 3.4cqw 2.8cqw;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(230,214,155,.05) 0 2px,transparent 2px 26px);pointer-events:none}
+.s-mark{position:absolute;top:1.3cqw;left:3.4cqw;display:flex;align-items:center;gap:.8cqw;font-size:1.05cqw;letter-spacing:.12em;font-weight:700;color:rgba(251,247,236,.75);z-index:1}
+.s-mark img{width:2cqw;height:2cqw;border-radius:.4cqw;background:#fff;padding:.15cqw}
+.s-tag{position:absolute;top:1.3cqw;right:3.4cqw;font-family:var(--f-mono);font-size:1.1cqw;letter-spacing:.08em;text-transform:uppercase;color:#E4C978;z-index:1}
+.vis{grid-area:1/1;min-width:0;min-height:0;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center}
+
+/* Title card */
+.tc{display:flex;flex-direction:column;gap:1.2cqw;max-width:56cqw}
+.tc-e{font-size:1.35cqw;letter-spacing:.14em;text-transform:uppercase;color:#E4C978;font-weight:600}
+.tc-t{font-family:var(--f-display);font-weight:700;font-size:4.4cqw;line-height:1.05;text-wrap:balance}
+.tc-s{font-size:1.75cqw;color:rgba(251,247,236,.85);line-height:1.4}
+.tc-g{font-size:1.3cqw;letter-spacing:.1em;color:#E4C978;border-top:1px solid rgba(228,201,120,.35);padding-top:1.1cqw;margin-top:.4cqw}
+
+/* Form (W-2 / 1099) */
+.form{background:#FFFDF6;color:#132A22;border-radius:.8cqw;padding:1.3cqw 1.5cqw;box-shadow:0 1.2cqw 3cqw rgba(0,0,0,.28)}
+.f-head{display:flex;justify-content:space-between;align-items:baseline;gap:1cqw;border-bottom:1.5px solid #132A22;padding-bottom:.6cqw;margin-bottom:.8cqw}
+.f-title{font-family:var(--f-display);font-weight:700;font-size:2.3cqw}
+.f-title small{font-family:var(--f-body);font-weight:500;font-size:1.1cqw;color:#4B6459;margin-left:.6cqw}
+.f-who{font-size:1.1cqw;color:#4B6459;text-align:right}
+.f-who b{display:block;color:#132A22;font-size:1.4cqw;letter-spacing:.02em}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6cqw}
+.f-notes{display:grid;grid-template-columns:1fr 1fr;gap:.6cqw;margin-top:.7cqw;padding-top:.7cqw;border-top:1px dashed rgba(19,42,34,.25)}
+.bx{border:1px solid rgba(19,42,34,.22);border-radius:.45cqw;padding:.55cqw .8cqw;display:flex;flex-direction:column;gap:.15cqw;transition:background .3s,border-color .3s,opacity .3s,box-shadow .3s}
+.bx .lb{font-size:1.1cqw;color:#4B6459;display:flex;gap:.6cqw;align-items:center;line-height:1.2}
+.bx .nm{font-family:var(--f-mono);font-weight:600;font-size:1cqw;background:#F6EDC8;color:#123F30;border-radius:.3cqw;padding:0 .45cqw}
+.bx .vl{font-family:var(--f-mono);font-weight:600;font-size:1.7cqw;font-variant-numeric:tabular-nums}
+.bx.note{background:#F4F0E2;border-style:dashed}
+.bx.note .vl{font-family:var(--f-body);font-size:1.45cqw}
+.focus .bx{opacity:.38}
+.focus .bx.on{opacity:1;background:#FFF3C4;border-color:#C6A233;box-shadow:0 0 0 .3cqw rgba(198,162,51,.35)}
+
+/* Lists */
+.lst{display:grid;gap:1cqw}
+.lst.grid{grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+.it{border-radius:.9cqw;padding:1.1cqw 1.3cqw;background:rgba(251,247,236,.08);border:1px solid rgba(228,201,120,.22);display:flex;flex-direction:column;gap:.35cqw;transition:background .3s,border-color .3s,opacity .3s,transform .3s;min-width:0}
+.it .t{font-family:var(--f-display);font-weight:700;font-size:1.85cqw;line-height:1.15}
+.it .d{font-size:1.25cqw;color:rgba(251,247,236,.78);line-height:1.35}
+.focus .it{opacity:.4}
+.focus .it.seen{opacity:.72}
+.it.on,.focus .it.on{opacity:1;background:#FBF7EC;color:#0E3B2E;border-color:#C6A233;box-shadow:0 0 0 .3cqw rgba(198,162,51,.4)}
+.it.on .d{color:#4B6459}
+/* flow */
+.lst.flow{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:stretch}
+.lst.flow .it{position:relative}
+.lst.flow .it:not(:last-child)::after{content:"→";position:absolute;right:-1.05cqw;top:50%;transform:translate(50%,-50%);color:#E4C978;font-size:1.6cqw;z-index:2}
+.lst.flow .it .t{font-size:1.6cqw}
+/* check & ledger rows */
+.lst.check,.lst.ledger{grid-template-columns:1fr;gap:.7cqw}
+.lst.check .it,.lst.ledger .it{flex-direction:row;align-items:center;gap:1.2cqw;padding:.8cqw 1.3cqw}
+.lst.check .it .t,.lst.ledger .it .t{font-size:1.65cqw}
+.lst.check .it .d{font-size:1.2cqw;margin-left:auto;text-align:right}
+.ck{width:2.4cqw;height:2.4cqw;border-radius:50%;border:.2cqw solid rgba(228,201,120,.6);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4cqw;font-weight:700;color:transparent;transition:background .3s,color .3s}
+.it.seen .ck,.it.on .ck{background:#C6A233;border-color:#C6A233;color:#0E3B2E}
+.lst.ledger .it{background:#FFFDF6;color:#132A22;border-color:rgba(19,42,34,.18)}
+.lst.ledger .it .d{margin-left:auto;font-family:var(--f-mono);font-weight:600;font-size:1.6cqw;color:#132A22;font-variant-numeric:tabular-nums;text-align:right}
+.lst.ledger .it.on{background:#FFF3C4}
+.lst.ledger.focus .it{opacity:.5}.lst.ledger.focus .it.seen{opacity:.88}.lst.ledger.focus .it.on{opacity:1}
+.lst.flow.wide{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:1.6cqw}
+.lst.flow.wide .it:nth-child(3n)::after{content:none}
+.lst.ledger.many{gap:.5cqw}.lst.ledger.many .it{padding:.55cqw 1.3cqw}
+
+/* Presenter */
+.presenter{grid-area:1/2;align-self:end;display:flex;flex-direction:column;align-items:center;gap:.9cqw;z-index:1}
+.face{width:100%;aspect-ratio:1;max-width:100%;border-radius:50%;background:radial-gradient(circle at 50% 35%,#2a7a5d,#123F30);border:.45cqw solid #C6A233;position:relative;overflow:hidden}
+.face img{position:absolute;left:22%;top:16%;width:56%;height:56%;object-fit:contain;background:#fff;border-radius:22%;padding:5%}
+.bars{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);display:flex;gap:6%;align-items:flex-end;width:34%;height:14%}
+.bars i{flex:1;height:25%;background:#E4C978;border-radius:2px;transition:height .2s}
+.talking .bars i{animation:eq .8s ease-in-out infinite alternate}
+.talking .bars i:nth-child(2){animation-delay:-.2s}.talking .bars i:nth-child(3){animation-delay:-.45s}.talking .bars i:nth-child(4){animation-delay:-.1s}.talking .bars i:nth-child(5){animation-delay:-.6s}
+@keyframes eq{from{height:20%}to{height:100%}}
+.face::after{content:"";position:absolute;inset:-.45cqw;border-radius:50%;box-shadow:0 0 0 0 rgba(228,201,120,.6)}
+.talking .face::after{animation:ring 1.4s ease-out infinite}
+.talking .mouth{animation:talk .32s ease-in-out infinite alternate;transform-origin:50px 52px}
+@keyframes ring{to{box-shadow:0 0 0 2.2cqw rgba(228,201,120,0)}}
+@keyframes talk{from{transform:scaleY(.35)}to{transform:scaleY(1.15)}}
+.p-label{font-size:1.15cqw;text-align:center;color:rgba(251,247,236,.78);line-height:1.3}
+.p-label b{display:block;color:#E4C978;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase}
+
+.caption{grid-area:2/1/3/3;z-index:1;background:rgba(6,22,17,.74);border-radius:.8cqw;padding:1cqw 1.6cqw;font-size:2.05cqw;line-height:1.35;min-height:6.4cqw;display:flex;align-items:center;text-wrap:pretty}
+.overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4cqw;background:rgba(9,32,25,.6);border:0;cursor:pointer;color:#FBF7EC;width:100%}
+.overlay .play{width:8.5cqw;height:8.5cqw;min-width:54px;min-height:54px;border-radius:50%;background:#C6A233;color:#0E3B2E;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.overlay .o-t{font-family:var(--f-display);font-weight:700;font-size:max(18px,2.8cqw)}
+.overlay .o-s{font-size:max(12px,1.5cqw);color:rgba(251,247,236,.82)}
+
+@container (max-width:600px){
+  .stage{aspect-ratio:auto;grid-template-columns:1fr 23cqw;grid-template-rows:auto auto;gap:3cqw;padding:7cqw 4cqw 4cqw;min-height:100cqw}
+  .s-mark{font-size:2.4cqw;top:2.2cqw;left:4cqw} .s-mark img{width:4cqw;height:4cqw}
+  .s-tag{font-size:2.4cqw;top:2.4cqw;right:4cqw}
+  .vis{grid-area:1/1/2/3}
+  .tc{max-width:none;gap:2.4cqw} .tc-e{font-size:2.8cqw} .tc-t{font-size:8.4cqw} .tc-s{font-size:3.7cqw} .tc-g{font-size:2.7cqw;padding-top:2.4cqw}
+  .form{padding:2.6cqw 3cqw;border-radius:2cqw}
+  .f-title{font-size:4.6cqw} .f-title small{display:none} .f-who{font-size:2.4cqw} .f-who b{font-size:2.8cqw}
+  .f-grid,.f-notes{gap:1.4cqw} .f-notes{grid-template-columns:1fr}
+  .bx{padding:1.3cqw 1.8cqw;border-radius:1.2cqw} .bx .lb{font-size:2.5cqw} .bx .nm{font-size:2.3cqw} .bx .vl{font-size:3.6cqw} .bx.note .vl{font-size:3.2cqw}
+  .lst{gap:2cqw} .lst.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .it{padding:2.2cqw 2.6cqw;border-radius:2cqw;gap:.6cqw} .it .t{font-size:3.7cqw} .it .d{font-size:2.8cqw}
+  .lst.flow{grid-auto-flow:row;grid-template-columns:1fr}
+  .lst.flow .it:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-2cqw;transform:translate(-50%,50%);font-size:3cqw}
+  .lst.flow .it .t{font-size:3.5cqw}
+  .lst.flow.wide{grid-template-columns:1fr}
+  .lst.flow.wide .it:nth-child(3n):not(:last-child)::after{content:"↓"}
+  .lst.check,.lst.ledger{gap:1.6cqw} .lst.check .it,.lst.ledger .it{padding:1.8cqw 2.6cqw;gap:2.4cqw}
+  .lst.check .it .t,.lst.ledger .it .t{font-size:3.4cqw} .lst.check .it .d{font-size:2.6cqw;max-width:45%} .lst.ledger .it .d{font-size:3.3cqw}
+  .lst.ledger.many{gap:1.2cqw} .lst.ledger.many .it{padding:1.3cqw 2.6cqw}
+  .ck{width:5cqw;height:5cqw;font-size:3cqw;border-width:.45cqw}
+  .presenter{grid-area:2/2} .p-label{display:none}
+  .caption{grid-area:2/1;font-size:3.9cqw;padding:2.2cqw 3cqw;border-radius:2cqw;min-height:18cqw}
+}
+
+.controls{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.ctl{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;min-width:38px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--paper);cursor:pointer;font-size:13px;font-weight:600}
+.ctl.primary{background:var(--green-700);border-color:var(--green-700);color:#fff;width:38px;padding:0}
+.ctl[aria-pressed="false"]{color:var(--ink-dim)}
+.time{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{flex:1;min-width:140px;height:22px;position:relative;cursor:pointer;display:flex;align-items:center}
+.track-bg{position:absolute;left:0;right:0;height:6px;border-radius:99px;background:var(--paper-2);overflow:hidden}
+.track-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold-500),var(--gold-300))}
+
+.transcript{border-top:1px solid var(--line)}
+.transcript summary{cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;color:var(--ink-dim);list-style:none}
+.transcript summary::-webkit-details-marker{display:none}
+.transcript summary::before{content:"▸ ";color:var(--gold-500)}
+.transcript[open] summary::before{content:"▾ "}
+.tl{padding:0 16px 14px;display:flex;flex-direction:column;gap:2px}
+.tl button{text-align:left;border:0;background:none;padding:6px 8px;border-radius:8px;font-size:14px;line-height:1.5;cursor:pointer;color:var(--ink-dim)}
+.tl button:hover{background:var(--paper-2)}
+.tl button.on{background:var(--gold-100);color:var(--ink)}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.card-h{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);font-weight:700;margin:0 0 12px;font-family:var(--f-body)}
+.does ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px dashed var(--line);border-radius:10px;font-size:13.5px}
+.chip em{font-style:normal;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);background:var(--paper-2);padding:2px 7px;border-radius:99px}
+.eb{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.eb-pages{flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px}
+.eb-pg{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);font-size:14px}
+.eb-pg:hover{border-color:var(--green-600);background:var(--paper-2)}
+.eb-pg b{font-family:var(--f-mono);font-size:12px;min-width:52px;color:var(--green-600)}
+.eb-pg span{flex:1;min-width:0}
+.eb-pg i{font-style:normal;font-size:12px;color:var(--ink-dim)}
+.eb-side{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.eb-note{font-size:12.5px;color:var(--ink-dim);max-width:30ch}
+.dl.green{background:var(--green-700);color:#fff}
+.dl.green:hover{background:var(--green-600)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--green-900);color:#FBF7EC;padding:10px 16px;border-radius:99px;font-size:13.5px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.yr{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-600);border:1px solid var(--line);border-radius:99px;padding:3px 10px}
+.given{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 16px}
+.given div{background:var(--paper-2);border-radius:10px;padding:8px 12px}
+.given dt{font-size:11.5px;color:var(--ink-dim)}
+.given dd{margin:0;font-family:var(--f-mono);font-weight:600;font-size:15px}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:st}
+.st{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;counter-increment:st}
+.st.ok{border-color:var(--good);background:var(--good-bg)}
+.st-q{font-weight:600;display:flex;gap:10px}
+.st-q::before{content:counter(st);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--green-700);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.st.ok .st-q::before{content:"✓";background:var(--good)}
+.st-a{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-left:32px}
+.amt{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.amt span{padding:0 4px 0 10px;color:var(--ink-dim);font-family:var(--f-mono)}
+.amt span.u{padding:0 10px 0 4px}
+.amt input{border:0;outline:0;background:transparent;font-family:var(--f-mono);font-size:15px;width:9.5em;max-width:46vw;padding:9px 10px 9px 0;color:var(--ink)}
+.amt:focus-within{border-color:var(--green-600);box-shadow:0 0 0 3px rgba(31,113,84,.15)}
+.ch{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-size:14px;cursor:pointer}
+.ch[aria-pressed="true"]{border-color:var(--green-700);background:var(--paper-2);font-weight:600}
+.btn.sm{height:36px;padding:0 16px;font-size:13px}
+.link{border:0;background:none;color:var(--green-600);font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.st-fb{padding-left:32px;font-size:13.5px;font-weight:600}
+.st-fb.good{color:var(--good)}.st-fb.bad{color:var(--bad)}
+.st-how{padding-left:32px;font-size:13.5px;color:var(--ink-dim);font-family:var(--f-mono);line-height:1.6}
+.wk-sum{margin-top:14px;font-size:14px;color:var(--ink-dim)}
+.wk-sum b{color:var(--ink)}
+.wk-note{margin:10px 0 0;font-size:13px;color:var(--ink-dim);background:var(--paper-2);border-radius:10px;padding:10px 12px}
+.refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.ref h3{margin:0 0 8px;font-family:var(--f-body);font-size:14px}
+.ref table{width:100%;border-collapse:collapse;font-size:13.5px}
+.ref td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.ref td:last-child{text-align:right;font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums;padding-left:12px;width:45%}
+.src{margin:12px 0 0;font-size:11.5px;color:var(--ink-dim)}
+.q{margin-bottom:18px}
+.q-t{font-weight:600;margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px}
+.opt:hover{border-color:var(--green-600)}
+.opt input{accent-color:var(--green-700);width:16px;height:16px;flex-shrink:0;margin:0}
+.opt b{font-family:var(--f-mono);font-size:12px;color:var(--ink-dim)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.fb{font-size:13px;font-weight:600;margin-top:6px}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn{height:42px;padding:0 20px;border-radius:99px;border:1px solid var(--green-700);background:var(--green-700);color:#fff;font-weight:600;font-size:14px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--green-700)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.score{font-size:13.5px;color:var(--ink-dim)}
+.done-card{background:var(--green-900);color:#FBF7EC;border-radius:16px;padding:22px;display:flex;gap:18px;align-items:center}
+.done-card img{width:64px;height:64px;border-radius:14px;background:#fff;padding:5px;flex-shrink:0}
+.done-card h2{margin:0 0 4px;font-size:22px}
+.done-card p{margin:0;color:rgba(251,247,236,.82);font-size:14px}
+.disc{font-size:12px;color:var(--ink-dim);line-height:1.55}
+
+.bottom{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+.bottom .pos{font-size:12.5px;color:var(--ink-dim)}
+
+.scrim{display:none;position:fixed;inset:0;background:rgba(10,20,17,.5);z-index:19;border:0}
+@media (max-width:880px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;height:auto;transform:translateX(-104%);transition:transform .25s;box-shadow:0 0 40px rgba(0,0,0,.35);padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px)}
+  body.nav .sidebar{transform:none}
+  body.nav .scrim{display:block}
+  .menu-btn{display:inline-flex}
+  .pane{padding-block:20px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .topbar,.bottom{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .bottom .pos{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 
-<div class="app">
-  <div class="overlay" onclick="closeNav()"></div>
 
+<div class="app">
+  <button class="scrim" id="scrim" type="button" aria-label="Close course map"></button>
   <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <div class="brand-badge"><img src="assets/logo.png" alt="WIN logo"/></div>
-      <div>
-        <div class="brand-name">WIN TAX ACADEMY</div>
-        <div class="brand-tag">Skills Are Wealth.</div>
-      </div>
+      <img src="beginner/logo.png" alt="WIN Tax Academy logo">
+      <div><div class="brand-name">WIN TAX ACADEMY</div><div class="brand-tag">Skills Are Wealth.</div></div>
     </div>
-
-
-    <div class="progress-wrap">
-      <div class="progress-label"><span>Your progress</span><span id="progressPct">0%</span></div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="prog">
+      <div class="prog-l"><span>Your progress</span><span id="progPct">0%</span></div>
+      <div class="prog-t"><div class="prog-f" id="progFill"></div></div>
     </div>
-
-    <nav class="course-map" id="courseMap"></nav>
-
-    <div class="sidebar-foot">
-      This is skills training. It does not by itself provide an IRS credential, PTIN, professional license, job, or authorization to prepare paid returns.
+    <div class="ebook-side">
+      <div class="k">Student eBook</div>
+      <div class="n">WIN at Taxes</div>
+      <div class="m">A visual beginner guide to tax forms · 16 pages · PDF</div>
+      <a class="dl js-dl" href="beginner/ebook.pdf" download="WIN-at-Taxes-Visual-eBook.pdf">↓ Download eBook</a>
     </div>
+    <nav class="map" id="map" aria-label="Course map"></nav>
+    <div class="side-foot">Beginner Tier · Learn to do your own taxes. Educational use only, not individualized tax advice. This course does not provide a PTIN, license, or authorization to prepare returns for others.</div>
   </aside>
 
   <main class="main">
     <div class="topbar">
-      <button class="menu-btn" onclick="openNav()" aria-label="Open course map">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open course map"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <div class="crumb" id="crumb"></div>
-      <div class="demo-pill" id="demoPill">Beginner tier preview</div>
+      <div class="tier">Beginner Tier</div>
     </div>
 
-    <div class="lesson-pane" id="lessonPane"></div>
+    <div class="pane">
+      <header>
+        <div class="eyebrow" id="eyebrow"></div>
+        <h1 class="l-h1" id="title"></h1>
+        <span class="yr" id="yr" hidden></span>
+      </header>
+      <div class="method" id="method"></div>
 
-    <div class="bottom-bar">
-      <div class="disclaimer">Client preview build of the Beginner tier. Not the live Payhip build.</div>
-      <button class="btn" id="nextBtn" onclick="goNext()">Mark complete &amp; next →</button>
+      <section class="player" aria-label="Lesson video">
+        <div class="stage" id="stage">
+          <div class="s-mark"><img src="beginner/logo.png" alt="">WIN TAX ACADEMY</div>
+          <div class="s-tag" id="sTag"></div>
+          <div class="vis" id="vis"></div>
+          <div class="presenter" id="presenter">
+            <div class="face" aria-hidden="true">
+              <img src="beginner/logo.png" alt="">
+              <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="p-label"><b>Your WIN guide</b>Narrating this lesson</div>
+          </div>
+          <div class="caption" id="caption" aria-live="polite"></div>
+          <button class="overlay" id="overlay" type="button">
+            <span class="play"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            <span class="o-t" id="oTitle">Play the lesson</span>
+            <span class="o-s" id="oSub"></span>
+          </button>
+        </div>
+        <div class="controls">
+          <button class="ctl primary" id="playBtn" type="button" aria-label="Play"></button>
+          <span class="time" id="time">0:00 / 0:00</span>
+          <div class="track" id="track" role="slider" tabindex="0" aria-label="Lesson position" aria-valuemin="0" aria-valuenow="0"><div class="track-bg"><div class="track-fill" id="fill"></div></div></div>
+          <button class="ctl" id="voiceBtn" type="button" aria-pressed="true">Sound on</button>
+        </div>
+        <details class="transcript" id="transcript"><summary>Read along (transcript)</summary><div class="tl" id="tl"></div></details>
+      </section>
+
+      <section class="card" id="refCard" hidden>
+        <h2 class="card-h">Tax numbers you'll need</h2>
+        <div class="refs" id="refs"></div>
+        <p class="src">From IRS 2025 and 2026 inflation adjustments, the 2026 mileage notices, and the 2025 tax law changes. Practice figures only.</p>
+      </section>
+      <section class="card work" id="workCard" hidden>
+        <h2 class="card-h" id="workTitle"></h2>
+        <dl class="given" id="given"></dl>
+        <ol class="steps" id="steps"></ol>
+        <div class="wk-sum" id="wkSum" aria-live="polite"></div>
+        <p class="wk-note" id="wkNote" hidden></p>
+      </section>
+      <section class="card" id="ebookCard">
+        <h2 class="card-h">Follow along in the eBook</h2>
+        <div class="eb">
+          <div class="eb-pages" id="ebPages"></div>
+          <div class="eb-side">
+            <a class="dl green js-dl" href="beginner/ebook.pdf" download="WIN-at-Taxes-Visual-eBook.pdf">↓ Download eBook</a>
+            <span class="eb-note">WIN at Taxes · Visual eBook. Keep it open next to the lesson and check your answers in the back.</span>
+          </div>
+        </div>
+      </section>
+      <section class="card does" id="doesCard"><h2 class="card-h">You do it</h2><ol id="does"></ol></section>
+      <section class="card" id="quizCard">
+        <h2 class="card-h" id="quizLabel"></h2>
+        <div id="quiz"></div>
+        <div class="actions">
+          <button class="btn" id="checkBtn" type="button" disabled>Check my answers</button>
+          <button class="btn ghost" id="retryBtn" type="button" hidden>Try again</button>
+          <span class="score" id="score"></span>
+        </div>
+      </section>
+      <section class="done-card" id="doneCard" hidden>
+        <img src="beginner/logo.png" alt="">
+        <div><h2>You finished the Beginner Tier</h2><p id="doneText">Keep Learning. Keep Building. Keep Winning.™</p></div>
+      </section>
+      <p class="disc">Educational use only. This is not individualized tax advice. Practice figures follow the approved course build and are for learning, not for filing.</p>
+    </div>
+
+    <div class="bottom">
+      <button class="btn ghost" id="prevBtn" type="button">← Back</button>
+      <span class="pos" id="pos"></span>
+      <button class="btn" id="nextBtn" type="button">Mark complete &amp; next →</button>
     </div>
   </main>
 </div>
 
-<script src="data.js"></script>
-<script src="app.js"></script>
+<div class="toast" id="toast" role="status" hidden></div>
+<script>
+const COURSE = [{"id": "sh", "group": "Start Here", "n": 0, "tag": "Welcome", "title": "Welcome to WIN Tax Academy", "screen": {"e": "WIN Tax Academy · Beginner Tier", "t": "Learn to do your own taxes", "s": "One person. Two years. A job, then a new baby and a little side money — done by yourself.", "g": "LEARN IT • SEE IT • DO IT • REVIEW IT"}, "visual": {"type": "list", "variant": "flow", "items": [{"t": "LEARN IT", "d": "How it works"}, {"t": "SEE IT", "d": "An example from Deja's life"}, {"t": "DO IT", "d": "You try it"}, {"t": "REVIEW IT", "d": "Check your work"}, {"t": "NEVER GUESS", "d": "Stop and ask instead"}]}, "lines": [{"t": "Welcome to WIN Tax Academy!", "c": null}, {"t": "This is the Beginner level.", "c": null}, {"t": "You will follow one person, Deja Marsh, through two years of her life — her job, her new baby, and a little side money she makes.", "c": null}, {"t": "Each lesson gives you one new skill.", "c": 0}, {"t": "First I show you how it works.", "c": 0}, {"t": "Then I show you an example from Deja's life.", "c": 1}, {"t": "Then YOU try it yourself and check your work.", "c": [2, 3]}, {"t": "Here is the most important rule: never guess.", "c": 4}, {"t": "If something is missing or confusing, stop and ask a question instead of guessing.", "c": 4}, {"t": "By the end, you will be able to read a W-2, claim a child as a dependent, handle a simple 1099 form, and do your own taxes with confidence.", "c": null}, {"t": "This course teaches you to do YOUR OWN taxes.", "c": null}, {"t": "You do not need a special license called a PTIN.", "c": null}, {"t": "Doing taxes for other people for money is not part of this course.", "c": null}, {"t": "Download your WIN at Taxes eBook, and let's meet Deja!", "c": null}], "does": ["Download the WIN at Taxes eBook from the menu.", "Read page 2, \"How to use this book.\"", "Then go to Module 1."], "ebook": [[2, "How to use this book"]]}, {"id": "m1l1", "group": "Module 1 — Tax Basics & Your Income", "n": 1, "tag": "Teaching", "title": "How Taxes Actually Work", "year": "Tax year 2025", "screen": {"e": "WIN Tax Academy · Module 1", "t": "How Taxes Work", "s": "Marginal ≠ Effective", "g": "MEET DEJA MARSH"}, "visual": {"type": "list", "variant": "grid", "items": [{"t": "Taxes come in layers", "d": "These layers are called brackets"}, {"t": "Deja Marsh", "d": "Worked full-time · earned $68,200"}, {"t": "Marginal rate", "d": "The rate on her LAST dollar"}, {"t": "Effective rate", "d": "Total tax ÷ all income"}, {"t": "Effective is smaller", "d": "Lower layers are taxed at lower rates first"}, {"t": "Paid all year", "d": "Tax gets paid through the year, not just once"}]}, "lines": [{"t": "Welcome to Module One!", "c": null}, {"t": "Here is a big idea: taxes are paid in layers.", "c": 0}, {"t": "We call these layers brackets.", "c": 0}, {"t": "You do not pay the same tax rate on every dollar you earn.", "c": 0}, {"t": "Meet Deja Marsh.", "c": 1}, {"t": "Last year, she worked full-time and earned $68,200.", "c": 1}, {"t": "Some people think Deja is 'in the 22% bracket,' so she pays 22% on ALL her money.", "c": 1}, {"t": "That is wrong! It is one of the most common mistakes beginners make.", "c": 1}, {"t": "Here are two words to know.", "c": null}, {"t": "Marginal rate is the rate on her LAST dollar earned — the bracket her top dollar sits in.", "c": 2}, {"t": "Effective rate is her total tax divided by all her income.", "c": 3}, {"t": "Effective rate is smaller than marginal rate, because the lower layers get taxed at lower rates first.", "c": 4}, {"t": "We will also learn who has to file taxes, and why the U.S. taxes get paid all through the year — not just once.", "c": 5}, {"t": "Remember that idea. It comes back later when Deja starts earning extra money.", "c": 5}], "refs": [{"title": "2025 tax numbers · Single", "rows": [["Standard deduction (Single)", "$15,750"], ["10% bracket", "$0 – $11,925"], ["12% bracket", "$11,926 – $48,475"], ["22% bracket", "$48,476 – $103,350"], ["Saver's Credit income limit (Single)", "$39,500"]]}], "does": ["Look over the 2025 tax table below. Find the three layers: 10%, 12%, and 22%.", "Notice that each layer has its own rate. That is why your whole income is not taxed at your top rate."], "ebook": [[5, "Why is take-home pay smaller?"]]}, {"id": "m1l2", "group": "Module 1 — Tax Basics & Your Income", "n": 2, "tag": "Teaching", "title": "Every Income Document & What to Deduct", "screen": {"e": "Module 1", "t": "Every Income Document & What to Deduct", "s": "W-2 • 1099-NEC • 1099-DIV • 1099-INT • SSA-1099", "g": "NO 1099? STILL TAXABLE. · DEDUCTION vs CREDIT"}, "visual": {"type": "list", "variant": "grid", "items": [{"t": "W-2", "d": "Wages and tax taken out by a job"}, {"t": "1099-NEC", "d": "Pay for contract work"}, {"t": "1099-DIV", "d": "Money from stocks"}, {"t": "1099-INT", "d": "Interest from a bank"}, {"t": "1099-R", "d": "Retirement money"}, {"t": "SSA-1099", "d": "Social Security payments"}, {"t": "No form?", "d": "Still taxable — all income counts"}, {"t": "Deduction", "d": "Shrinks the income that gets taxed"}, {"t": "Credit", "d": "Cuts money straight off the tax bill"}]}, "lines": [{"t": "Every income document tells you something different.", "c": null}, {"t": "Your job is to know each one by sight.", "c": null}, {"t": "A W-2 shows wages and tax taken out by a job.", "c": 0}, {"t": "A 1099-NEC shows pay for contract work.", "c": 1}, {"t": "A 1099-DIV shows money from stocks.", "c": 2}, {"t": "A 1099-INT shows interest from a bank.", "c": 3}, {"t": "A 1099-R shows retirement money.", "c": 4}, {"t": "An SSA-1099 shows Social Security payments.", "c": 5}, {"t": "Here is a rule beginners forget the most: ALL income counts, even without a form.", "c": 6}, {"t": "'I didn't get a 1099' is never a good reason to skip reporting money.", "c": 6}, {"t": "Now let's flip to the other side: deductions and credits.", "c": [7, 8]}, {"t": "A deduction shrinks the income that gets taxed.", "c": 7}, {"t": "A credit cuts money straight off the tax bill — and some credits can even give you a refund.", "c": 8}, {"t": "Most people today use the standard deduction instead of listing out each expense.", "c": 7}, {"t": "That changed after a 2017 tax law made the standard deduction much bigger.", "c": 7}, {"t": "So check the standard deduction first, before you start listing things like mortgage interest.", "c": 7}], "ebook": [[3, "Meet Alex and his W-2"], [10, "A 1099 is a clue — not the whole story"]]}, {"id": "m1l3", "group": "Module 1 — Tax Basics & Your Income", "n": 3, "tag": "Practice", "title": "Your Turn: Deja's W-2 Year", "year": "Tax year 2025", "screen": {"e": "Your Turn — Deja Marsh · 2025", "t": "Deja's W-2 Year", "s": "W-2 Wages: $68,200 · Federal Withholding: $5,100 · Traditional IRA Contribution: $2,000", "g": "FIND HER BRACKET. FIND HER RATE."}, "visual": {"type": "form", "kind": "W-2", "label": "2025 · Wage and Tax Statement · practice copy", "who": "DEJA MARSH", "boxes": [["1", "Wages, tips, other comp", "$68,200.00"], ["2", "Federal income tax withheld", "$5,100.00"], ["3", "Social Security wages", "$68,200.00"], ["4", "Social Security tax withheld", "$4,228.40"], ["5", "Medicare wages", "$68,200.00"], ["6", "Medicare tax withheld", "$988.90"], ["17", "State income tax", "$1,900.00"]], "notes": [["ira", "Traditional IRA contribution", "$2,000.00"], ["single", "Filing status", "Single · no dependents"]]}, "lines": [{"t": "Now it's your turn!", "c": null}, {"t": "Last year, Deja was single.", "c": "single"}, {"t": "Her W-2 shows $68,200 in wages, with $5,100 held back for federal tax.", "c": ["1", "2"]}, {"t": "She also put $2,000 into a traditional IRA that year.", "c": "ira"}, {"t": "First, do the adjustment: her IRA money is subtracted before we find her Adjusted Gross Income.", "c": ["1", "ira"]}, {"t": "Next, subtract the standard deduction to get her taxable income.", "c": "1"}, {"t": "Use the 2025 numbers in the worksheet below — that is the year this W-2 is for.", "c": null}, {"t": "Then find which bracket that number falls into — see how close she is to the edge!", "c": "1"}, {"t": "Once you know her bracket, find her effective rate: total tax divided by total wages.", "c": "1"}, {"t": "Compare the two numbers. That gap IS the whole lesson.", "c": null}, {"t": "Deja also asks about two credits: the Earned Income Tax Credit and a retirement savings credit.", "c": null}, {"t": "Don't just say yes because she asked!", "c": null}, {"t": "Check the real income limits first.", "c": null}, {"t": "If you don't know a limit, stop and look it up — never guess.", "c": null}], "refs": [{"title": "2025 tax numbers · Single", "rows": [["Standard deduction (Single)", "$15,750"], ["10% bracket", "$0 – $11,925"], ["12% bracket", "$11,926 – $48,475"], ["22% bracket", "$48,476 – $103,350"], ["Saver's Credit income limit (Single)", "$39,500"]]}], "work": {"title": "Work it out · Deja's 2025 taxes", "given": [["Wages (W-2 Box 1)", "$68,200"], ["IRA contribution", "$2,000"], ["Filing status", "Single"]], "steps": [{"q": "Adjusted Gross Income (AGI): wages minus IRA money", "kind": "num", "a": 66200, "tol": 0.5, "unit": "$", "how": "$68,200 − $2,000 = $66,200"}, {"q": "Taxable income: AGI minus the 2025 Single standard deduction", "kind": "num", "a": 50450, "tol": 0.5, "unit": "$", "how": "$66,200 − $15,750 = $50,450"}, {"q": "Which bracket is her LAST dollar in?", "kind": "choice", "o": ["10%", "12%", "22%"], "a": 2, "how": "$50,450 is above $48,475, so her top dollars are in the 22% layer — just $1,975 past the edge."}, {"q": "Tax on layer 1: 10% of the first $11,925", "kind": "num", "a": 1192.5, "tol": 0.5, "unit": "$", "how": "$11,925 × 0.10 = $1,192.50"}, {"q": "Tax on layer 2: 12% of the money from $11,925 to $48,475", "kind": "num", "a": 4386, "tol": 0.5, "unit": "$", "how": "$48,475 − $11,925 = $36,550 · $36,550 × 0.12 = $4,386"}, {"q": "Tax on layer 3: 22% of the money above $48,475", "kind": "num", "a": 434.5, "tol": 0.5, "unit": "$", "how": "$50,450 − $48,475 = $1,975 · $1,975 × 0.22 = $434.50"}, {"q": "Total tax: add the three layers", "kind": "num", "a": 6013, "tol": 1, "unit": "$", "how": "$1,192.50 + $4,386 + $434.50 = $6,013"}, {"q": "Effective rate: total tax ÷ wages (as a percent, one decimal)", "kind": "num", "a": 8.8, "tol": 0.15, "unit": "%", "how": "$6,013 ÷ $68,200 = 0.088 → 8.8%. Her marginal rate is 22%, but she really pays about 8.8%."}, {"q": "Can she get the Saver's Credit?", "kind": "choice", "o": ["Yes", "No"], "a": 1, "how": "Her AGI ($66,200) is above the 2025 Single limit ($39,500), so no."}]}, "does": ["Fill in each step of the worksheet and press Check.", "Use the 2025 tax numbers. Do not guess a number — look it up in the table.", "Finish with LOOK → ENTER → COMPARE."], "quiz": {"label": "Practice check · 4 questions", "qs": [{"q": "Deja's wages minus her IRA money equals her:", "o": ["Adjusted Gross Income", "Taxable income", "Standard deduction"], "a": 0}, {"q": "Her 2025 taxable income of $50,450 lands in which bracket?", "o": ["10%", "12%", "22%"], "a": 2}, {"q": "Deja says, 'I'm in the 22% bracket, so I pay 22% on everything.' What do you say?", "o": ["Agree with her", "Explain that only the money inside that bracket is taxed at 22%", "Just round her tax up to 22% of her wages"], "a": 1}, {"q": "She asks if she can get the Saver's Credit. What do you do?", "o": ["Say yes because she has an IRA", "Say no without checking", "Check that year's income limit against her AGI first"], "a": 2}]}, "ebook": [[3, "Meet Alex and his W-2"], [4, "What do the W-2 boxes mean?"], [6, "Let's do the Medicare math"]]}, {"id": "m1l4", "group": "Module 1 — Tax Basics & Your Income", "n": 4, "tag": "WIN Review", "title": "WIN Review: Income In, Deductions Out", "screen": {"e": "WIN Review · Module 1", "t": "Income In, Deductions Out", "s": "", "g": "MARGINAL ≠ EFFECTIVE · ALL INCOME COUNTS · CHECK BEFORE YOU CLAIM A CREDIT"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "Marginal ≠ Effective", "d": "Effective is the smaller number"}, {"t": "All income counts", "d": "Form or no form"}, {"t": "Deduction vs credit", "d": "Shrinks taxed income vs cuts the bill"}, {"t": "Check before you claim a credit", "d": "Limit first, then decide"}]}, "lines": [{"t": "Let's lock in Module One.", "c": null}, {"t": "Marginal rate is the rate on the LAST dollar.", "c": 0}, {"t": "Effective rate is total tax divided by total income — and it is the smaller number.", "c": 0}, {"t": "Every income document tells you something different, and money counts as income whether or not a form shows up.", "c": 1}, {"t": "A deduction shrinks the income that gets taxed.", "c": 2}, {"t": "A credit cuts the tax bill directly — and some credits can even send money back to you.", "c": 2}, {"t": "And here's the habit that ties it all together: never claim a credit just because you heard about it or got a form.", "c": 3}, {"t": "Check this year's limit, make sure you qualify, THEN decide.", "c": 3}], "quiz": {"label": "Module 1 WIN Review · 5 questions", "qs": [{"q": "What is the difference between marginal and effective rate?", "o": ["They are the same thing", "Effective is always the bigger number", "Marginal is the rate on your top dollar; effective is total tax divided by total income"], "a": 2}, {"q": "Deja got cash for a cake and no 1099. Does it count as income?", "o": ["Yes — all income counts, form or no form", "No", "Only if it's over $10,000"], "a": 0}, {"q": "A deduction is worth:", "o": ["A flat dollar amount for everyone", "Your tax rate times the amount", "Nothing unless you list every expense"], "a": 1}, {"q": "Most people today use:", "o": ["A list of every single expense", "Neither one", "The standard deduction"], "a": 2}, {"q": "You hear about a tax credit you haven't checked yet. What do you do?", "o": ["Check this year's limit first", "Claim it — everyone gets it", "Skip it without looking"], "a": 0}]}}, {"id": "m2l1", "group": "Module 2 — Claiming a Dependent", "n": 1, "tag": "Teaching", "title": "Meet Mia: The Qualifying Child Test", "year": "Tax year 2026", "screen": {"e": "Module 2 · Claiming a Dependent", "t": "The Qualifying Child Test", "s": "RELATIONSHIP • AGE • LIVES WITH YOU • SUPPORT", "g": "ONE NEW BABY CHANGES THE WHOLE RETURN"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "Relationship", "d": "Mia is Deja's own daughter"}, {"t": "Age", "d": "Under 19, or under 24 and a full-time student"}, {"t": "Lives with you", "d": "More than half the year"}, {"t": "Support", "d": "Child can't pay for more than half of their own support"}, {"t": "Mia qualifies", "d": "All four checks pass"}]}, "lines": [{"t": "Deja's daughter Mia was born in January this year.", "c": null}, {"t": "Before anything else changes, we must check that Mia really counts as Deja's dependent.", "c": null}, {"t": "Having a daughter doesn't automatically mean you can claim her — you have to check first.", "c": null}, {"t": "The qualifying child test has four parts.", "c": null}, {"t": "Relationship: Mia is Deja's own daughter — check!", "c": 0}, {"t": "Age: the child must be under 19, or under 24 and a full-time student.", "c": 1}, {"t": "Mia is a newborn — check!", "c": 1}, {"t": "Lives with you: the child must live with you more than half the year.", "c": 2}, {"t": "Mia lived with Deja her whole life so far — check!", "c": 2}, {"t": "Support: the child can't pay for more than half of their own support.", "c": 3}, {"t": "A newborn obviously can't — check!", "c": 3}, {"t": "All four checks pass, so Mia is Deja's qualifying child.", "c": 4}], "ebook": [[9, "Who can be a dependent?"]]}, {"id": "m2l2", "group": "Module 2 — Claiming a Dependent", "n": 2, "tag": "Teaching", "title": "Filing Status & the Credits That Come With a Child", "year": "Tax year 2026", "screen": {"e": "Module 2", "t": "Filing Status & Family Credits", "s": "Head of Household · Child Tax Credit: up to $2,200 per child", "g": "CHECK EIC LIMITS BEFORE YOU COUNT ON IT"}, "visual": {"type": "list", "variant": "grid", "items": [{"t": "Not married", "d": "Deja is single"}, {"t": "Pays for the home", "d": "More than half the cost"}, {"t": "Mia lived with her", "d": "All year"}, {"t": "Head of Household", "d": "Bigger standard deduction · better brackets"}, {"t": "Child Tax Credit", "d": "Up to $2,200 per child under 17"}, {"t": "Earned Income Tax Credit", "d": "Check this year's income limit first"}]}, "lines": [{"t": "Deja is not married.", "c": 0}, {"t": "She pays more than half the cost of her home.", "c": 1}, {"t": "And Mia lived with her all year.", "c": 2}, {"t": "That means Deja now files as Head of Household instead of Single.", "c": 3}, {"t": "Head of Household gets a bigger standard deduction and better tax brackets — both help Deja.", "c": 3}, {"t": "Claiming Mia also unlocks the Child Tax Credit: up to $2,200 for a qualifying child under 17.", "c": 4}, {"t": "This comes straight off her tax bill, not off her income.", "c": 4}, {"t": "Deja might also ask about the Earned Income Tax Credit.", "c": 5}, {"t": "Don't just say yes because she has a baby now!", "c": 5}, {"t": "The EIC has income limits that change every year.", "c": 5}, {"t": "Check this year's limit against her real income first.", "c": 5}], "refs": [{"title": "2026 tax numbers · Head of Household", "rows": [["Standard deduction (Head of Household)", "$24,150"], ["Standard deduction (Single), to compare", "$16,100"], ["10% bracket", "$0 – $17,700"], ["12% bracket", "$17,701 – $67,450"], ["22% bracket", "$67,451 – $105,700"], ["Child Tax Credit", "$2,200 per child under 17"], ["Earned Income Tax Credit income limit (1 child)", "$51,593"]]}], "ebook": [[7, "Filing status: start with the facts"], [8, "Two homes. Two different questions."]]}, {"id": "m2l3", "group": "Module 2 — Claiming a Dependent", "n": 3, "tag": "Practice", "title": "Your Turn: Deja's New W-2 Year", "year": "Tax year 2026", "screen": {"e": "Your Turn — Deja Marsh · 2026", "t": "Deja's New W-2 Year", "s": "Head of Household · Wages: $71,300 · Federal Withholding: $6,250", "g": "WHAT'S HER STATUS? WHAT'S HER REFUND?"}, "visual": {"type": "form", "kind": "W-2", "label": "2026 · Wage and Tax Statement · practice copy", "who": "DEJA MARSH", "boxes": [["1", "Wages, tips, other comp", "$71,300.00"], ["2", "Federal income tax withheld", "$6,250.00"]], "notes": [["hoh", "Filing status", "Head of Household"], ["mia", "Dependent", "Mia (born January 2026)"], ["sd", "Head of Household standard deduction", "$24,150.00"]]}, "lines": [{"t": "Now it's your turn!", "c": null}, {"t": "Deja's new W-2 shows $71,300 in wages, with $6,250 held back for federal tax.", "c": ["1", "2"]}, {"t": "This year she files as Head of Household and claims Mia.", "c": ["hoh", "mia"]}, {"t": "Start with her Head of Household standard deduction — it's bigger than the Single amount she used last year.", "c": "sd"}, {"t": "Subtract it from her wages to get taxable income.", "c": ["1", "sd"]}, {"t": "Find her bracket.", "c": null}, {"t": "Figure out her tax, then subtract the full $2,200 Child Tax Credit.", "c": "mia"}, {"t": "Compare what's left to her withholding to find her refund.", "c": "2"}, {"t": "Use the 2026 numbers in the worksheet below, and check each step as you go.", "c": null}], "refs": [{"title": "2026 tax numbers · Head of Household", "rows": [["Standard deduction (Head of Household)", "$24,150"], ["Standard deduction (Single), to compare", "$16,100"], ["10% bracket", "$0 – $17,700"], ["12% bracket", "$17,701 – $67,450"], ["22% bracket", "$67,451 – $105,700"], ["Child Tax Credit", "$2,200 per child under 17"], ["Earned Income Tax Credit income limit (1 child)", "$51,593"]]}], "work": {"title": "Work it out · Deja's 2026 W-2 taxes", "given": [["Wages (W-2 Box 1)", "$71,300"], ["Withheld (W-2 Box 2)", "$6,250"], ["Filing status", "Head of Household"], ["Dependent", "Mia"]], "steps": [{"q": "Taxable income: wages minus the Head of Household standard deduction", "kind": "num", "a": 47150, "tol": 0.5, "unit": "$", "how": "$71,300 − $24,150 = $47,150"}, {"q": "Which bracket is her LAST dollar in?", "kind": "choice", "o": ["10%", "12%", "22%"], "a": 1, "how": "$47,150 is between $17,701 and $67,450, so it is the 12% layer."}, {"q": "Tax on layer 1: 10% of the first $17,700", "kind": "num", "a": 1770, "tol": 0.5, "unit": "$", "how": "$17,700 × 0.10 = $1,770"}, {"q": "Tax on layer 2: 12% of the money above $17,700", "kind": "num", "a": 3534, "tol": 0.5, "unit": "$", "how": "$47,150 − $17,700 = $29,450 · $29,450 × 0.12 = $3,534"}, {"q": "Total tax before credits", "kind": "num", "a": 5304, "tol": 0.5, "unit": "$", "how": "$1,770 + $3,534 = $5,304"}, {"q": "Tax after the Child Tax Credit", "kind": "num", "a": 3104, "tol": 0.5, "unit": "$", "how": "$5,304 − $2,200 = $3,104"}, {"q": "Can she get the Earned Income Tax Credit?", "kind": "choice", "o": ["Yes", "No"], "a": 1, "how": "Her income ($71,300) is above the 2026 limit for one child ($51,593), so no."}, {"q": "Refund: withholding minus tax after credits", "kind": "num", "a": 3146, "tol": 0.5, "unit": "$", "how": "$6,250 − $3,104 = $3,146 back to Deja"}]}, "does": ["Check Deja's filing status and why she qualifies for it.", "Fill in each step of the worksheet and press Check.", "Compare her tax after credits to her $6,250 withholding to find her refund."], "quiz": {"label": "Practice check · 4 questions", "qs": [{"q": "Deja's filing status this year is:", "o": ["Head of Household", "Single", "Married Filing Jointly"], "a": 0}, {"q": "Her taxable income of $47,150 falls in the:", "o": ["10% bracket", "12% bracket", "22% bracket"], "a": 1}, {"q": "The Child Tax Credit for Mia cuts Deja's tax bill by:", "o": ["$1,100", "$4,400", "$2,200"], "a": 2}, {"q": "Compared to her $6,250 withholding, Deja's tax after credits means:", "o": ["She gets a refund", "She owes more money", "She breaks even exactly"], "a": 0}]}, "ebook": [[7, "Filing status: start with the facts"], [9, "Who can be a dependent?"]]}, {"id": "m2l4", "group": "Module 2 — Claiming a Dependent", "n": 4, "tag": "WIN Review", "title": "WIN Review: Dependents, Status & Credits", "screen": {"e": "WIN Review · Module 2", "t": "Dependents, Status & Credits", "s": "", "g": "FOUR-PART TEST · HOH BEATS SINGLE · CHECK EIC FIRST"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "Four-part qualifying child test", "d": "Relationship · age · lives with you · support"}, {"t": "Head of Household beats Single", "d": "Bigger standard deduction, better brackets"}, {"t": "Child Tax Credit", "d": "Up to $2,200 per child, off the tax bill"}, {"t": "Check EIC before you count on it", "d": "This year's income limit first"}]}, "lines": [{"t": "Claiming a dependent means passing all four parts of the qualifying child test: relationship, age, lives with you, and support.", "c": 0}, {"t": "Pass all four, and you can claim the child.", "c": 0}, {"t": "Having a qualifying child at home can also unlock Head of Household status — a bigger standard deduction and better brackets than Single — plus the Child Tax Credit, worth up to $2,200 per child, straight off the tax bill.", "c": [1, 2]}, {"t": "And here's the habit that protects you: never count on the Earned Income Tax Credit just because you have a child.", "c": 3}, {"t": "Check this year's income limit first.", "c": 3}], "quiz": {"label": "Module 2 WIN Review · 5 questions", "qs": [{"q": "To claim Mia as a qualifying child, she must have lived with Deja for:", "o": ["The full year only", "Any amount of time", "More than half the year"], "a": 2}, {"q": "Head of Household status requires Deja to:", "o": ["Pay more than half the cost of her home for a qualifying person", "Be married", "Have two or more dependents"], "a": 0}, {"q": "In 2026, the Child Tax Credit is worth up to:", "o": ["$1,100", "$2,200", "$3,300"], "a": 1}, {"q": "Before counting on the Earned Income Tax Credit, you should:", "o": ["Assume you qualify because you have a child", "Tell yourself no without checking", "Check this year's income limit first"], "a": 2}, {"q": "Head of Household's standard deduction compared to Single is:", "o": ["Higher", "Lower", "The same"], "a": 0}]}}, {"id": "m3l1", "group": "Module 3 — Your 1099 Income", "n": 1, "tag": "Teaching", "title": "What a 1099-NEC Means for Your Return", "year": "Tax year 2026", "screen": {"e": "Module 3 · Your 1099 Income", "t": "What a 1099-NEC Means", "s": "Pay for contract work · Sent at $2,000+", "g": "NO 1099? STILL TAXABLE."}, "visual": {"type": "form", "kind": "1099-NEC", "label": "2026 · Nonemployee Compensation · practice copy", "who": "DEJA MARSH", "payer": "Farmers-market co-op", "boxes": [["1", "Nonemployee compensation", "$4,200.00"], ["4", "Federal income tax withheld", "(blank)"]], "notes": [["n2000", "Form is sent when pay reaches", "$2,000 or more"], ["ntax", "Is the money taxable?", "Yes — form or no form"]]}, "lines": [{"t": "Deja started decorating cakes on weekends for a local farmers-market group.", "c": null}, {"t": "At the end of the year, they send her a Form 1099-NEC — this shows what they paid her for her work.", "c": "1"}, {"t": "Starting in 2026, a business must send a 1099-NEC to anyone it pays $2,000 or more in a year.", "c": "n2000"}, {"t": "But that $2,000 rule is only about when the FORM has to be sent — not about when the money becomes taxable.", "c": "n2000"}, {"t": "Deja owes tax on every dollar, whether a form shows up or not.", "c": "ntax"}, {"t": "No employer is taking tax out of this money for her, and that matters for what's next.", "c": "4"}], "ebook": [[10, "A 1099 is a clue — not the whole story"]]}, {"id": "m3l2", "group": "Module 3 — Your 1099 Income", "n": 2, "tag": "Teaching", "title": "Simple Business Expenses & Net Profit", "year": "Tax year 2026", "screen": {"e": "Module 3", "t": "Simple Expenses & Net Profit", "s": "Ordinary and necessary", "g": "SCHEDULE C → NET PROFIT → FORM 1040"}, "visual": {"type": "list", "variant": "flow", "items": [{"t": "1099 pay", "d": "What she was paid"}, {"t": "− Business costs", "d": "Ordinary and necessary"}, {"t": "= Net profit", "d": "This is what gets taxed"}, {"t": "Schedule C", "d": "Where the income and costs go"}, {"t": "Form 1040", "d": "Where net profit lands"}, {"t": "+ Self-employment tax", "d": "On top of income tax"}]}, "lines": [{"t": "Deja can subtract her real business costs from what she was paid.", "c": [0, 1]}, {"t": "What's left is called her net profit, and net profit — not the full 1099 amount — is what gets taxed.", "c": 2}, {"t": "A cost counts if it's ordinary (common for a cake business) and necessary (helpful for it).", "c": 1}, {"t": "Supplies and driving miles for deliveries both count.", "c": 1}, {"t": "Keep every receipt and a mileage log. No receipt, no deduction.", "c": 1}, {"t": "This income and these costs go on a form called Schedule C, and the net profit flows onto Deja's Form 1040.", "c": [3, 4]}, {"t": "Because this is self-employment money — no employer is taking out Social Security or Medicare for her — that same net profit also owes self-employment tax, ON TOP OF regular income tax.", "c": 5}, {"t": "We'll see both together in Lesson 3.", "c": null}], "refs": [{"title": "2026 side-gig numbers", "rows": [["Mileage rate, Jan 1 – Jun 30, 2026", "72.5¢ a mile"], ["Mileage rate, Jul 1 – Dec 31, 2026", "76¢ a mile"], ["Self-employment tax", "net profit × 92.35% × 15.3%"], ["1099-NEC is sent when pay reaches", "$2,000 in a year"]]}], "ebook": [[11, "Business expense or personal expense?"]]}, {"id": "m3l3", "group": "Module 3 — Your 1099 Income", "n": 3, "tag": "Practice", "title": "Your Turn: Deja's Cake Gig", "year": "Tax year 2026", "screen": {"e": "Your Turn — Deja's Cake Gig · 2026", "t": "What's Her Net Profit?", "s": "1099-NEC: $4,200 · Supplies: $600 · Mileage: 310 miles (200 before July, 110 after)", "g": "WHAT'S HER NET PROFIT?"}, "visual": {"type": "list", "variant": "ledger", "items": [{"t": "1099-NEC pay", "d": "$4,200"}, {"t": "Supplies", "d": "− $600"}, {"t": "Miles Jan – Jun", "d": "− 200 × 72.5¢"}, {"t": "Miles Jul – Dec", "d": "− 110 × 76¢"}, {"t": "Net profit", "d": "= ?"}, {"t": "Extra tax on net profit", "d": "?"}]}, "lines": [{"t": "Deja's 1099-NEC shows $4,200 in pay.", "c": 0}, {"t": "She kept her receipts: $600 in supplies, and a mileage log showing 310 business miles — 200 before July, and 110 after.", "c": [1, 2, 3]}, {"t": "The IRS raised its mileage rate on July 1, 2026, so each part gets its own rate: 72.5 cents a mile before July, and 76 cents after.", "c": [2, 3]}, {"t": "Work out her net profit: start with the $4,200, subtract her supplies, then subtract her mileage deduction.", "c": [0, 1, 2, 3, 4]}, {"t": "That net profit is what goes on her Form 1040 — and it's also the number her self-employment tax is based on.", "c": [4, 5]}], "refs": [{"title": "2026 side-gig numbers", "rows": [["Mileage rate, Jan 1 – Jun 30, 2026", "72.5¢ a mile"], ["Mileage rate, Jul 1 – Dec 31, 2026", "76¢ a mile"], ["Self-employment tax", "net profit × 92.35% × 15.3%"], ["1099-NEC is sent when pay reaches", "$2,000 in a year"]]}], "work": {"title": "Work it out · Deja's cake gig", "given": [["1099-NEC pay", "$4,200"], ["Supplies (receipts)", "$600"], ["Miles Jan – Jun", "200"], ["Miles Jul – Dec", "110"]], "steps": [{"q": "Mileage deduction, January to June: 200 miles × 72.5¢", "kind": "num", "a": 145, "tol": 0.5, "unit": "$", "how": "200 × $0.725 = $145.00"}, {"q": "Mileage deduction, July to December: 110 miles × 76¢", "kind": "num", "a": 83.6, "tol": 0.5, "unit": "$", "how": "110 × $0.76 = $83.60"}, {"q": "Total business costs: supplies + both mileage amounts", "kind": "num", "a": 828.6, "tol": 0.5, "unit": "$", "how": "$600 + $145.00 + $83.60 = $828.60"}, {"q": "Net profit: 1099 pay minus total costs", "kind": "num", "a": 3371.4, "tol": 1, "unit": "$", "how": "$4,200 − $828.60 = $3,371.40 (about $3,371)"}, {"q": "Which extra tax applies to her net profit?", "kind": "choice", "o": ["None", "Self-employment tax", "Sales tax"], "a": 1, "how": "No employer paid Social Security or Medicare on this money, so she owes self-employment tax on top of income tax."}]}, "does": ["Find the pay amount on Deja's 1099-NEC.", "Work out both mileage amounts, using the right rate for each part of the year.", "Write down her net profit and name the extra tax on it."], "quiz": {"label": "Practice check · 5 questions", "qs": [{"q": "Deja's 1099-NEC shows pay of:", "o": ["$3,371", "$600", "$4,200"], "a": 2}, {"q": "Her net profit after costs is about:", "o": ["$3,371", "$4,200", "$829"], "a": 0}, {"q": "Net profit from a 1099-NEC goes on the return through:", "o": ["A W-2 only", "Schedule C, then Form 1040", "It isn't reported"], "a": 1}, {"q": "Because her net profit is self-employment money, Deja should also expect:", "o": ["Self-employment tax on top of income tax", "No extra tax", "An automatic refund"], "a": 0}, {"q": "Why does Deja's mileage use two different rates?", "o": ["She picked the higher one", "The IRS rate went up on July 1, 2026", "She drove two different cars"], "a": 1}]}, "ebook": [[10, "A 1099 is a clue — not the whole story"], [11, "Business expense or personal expense?"]]}, {"id": "m3l4", "group": "Module 3 — Your 1099 Income", "n": 4, "tag": "WIN Review", "title": "WIN Review: 1099 Income & Net Profit", "screen": {"e": "WIN Review · Module 3", "t": "1099 Income & Net Profit", "s": "", "g": "$2,000+ = A 1099-NEC · ALL INCOME COUNTS · INCOME TAX + SE TAX"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "$2,000+ = a 1099-NEC gets sent", "d": "The form rule, not the tax rule"}, {"t": "All income counts", "d": "Form or no form"}, {"t": "Ordinary & necessary costs", "d": "Shrink pay down to net profit on Schedule C"}, {"t": "Net profit owes two taxes", "d": "Income tax + self-employment tax"}]}, "lines": [{"t": "Starting in 2026, a 1099-NEC gets sent once someone pays $2,000 or more for work in a year — but the income counts either way, form or no form.", "c": [0, 1]}, {"t": "Costs that are ordinary and necessary shrink the pay down to net profit on Schedule C, and that net profit is what lands on Form 1040.", "c": 2}, {"t": "Because no employer took out Social Security or Medicare for this money, that same net profit also owes self-employment tax — ON TOP OF regular income tax, not instead of it.", "c": 3}, {"t": "And remember: keep your receipts. No receipt, no deduction.", "c": 2}], "quiz": {"label": "Module 3 WIN Review · 5 questions", "qs": [{"q": "In 2026, a 1099-NEC must be sent once a payer pays a contractor:", "o": ["$2,000 or more in a year", "Any amount", "$10,000 or more"], "a": 0}, {"q": "Income with no 1099 sent is:", "o": ["Not taxable", "Only taxable if over $1,000", "Still taxable"], "a": 2}, {"q": "A business expense must be:", "o": ["Convenient", "Ordinary and necessary", "Pre-approved"], "a": 1}, {"q": "Net profit from a 1099-NEC is reported on:", "o": ["The 1099 itself", "A W-2", "Schedule C, then Form 1040"], "a": 2}, {"q": "Self-employment tax applies:", "o": ["On top of income tax", "Instead of income tax", "Only if you choose it"], "a": 0}]}}, {"id": "m4l1", "group": "Module 4 — Put It All Together & File", "n": 1, "tag": "Teaching", "title": "Choosing How to File", "screen": {"e": "Module 4 · Put It All Together", "t": "Choosing How to File", "s": "E-file or paper", "g": "THIS GETS YOU READY TO FILE YOUR OWN RETURN — NOT OTHER PEOPLE'S"}, "visual": {"type": "list", "variant": "grid", "items": [{"t": "W-2", "d": "From her job"}, {"t": "Dependent", "d": "Mia"}, {"t": "1099-NEC", "d": "From the cake gig"}, {"t": "E-file", "d": "Faster · catches math mistakes · quicker refunds"}, {"t": "Your own return", "d": "No PTIN needed"}, {"t": "Other people's returns, for pay", "d": "Needs a PTIN · not part of this course"}]}, "lines": [{"t": "Deja has everything she needs now: a W-2, a dependent, and a 1099-NEC.", "c": [0, 1, 2]}, {"t": "Most people e-file — it's faster, it catches simple math mistakes, and refunds come back sooner than with paper.", "c": 3}, {"t": "This course gets you ready to do YOUR OWN return with confidence.", "c": 4}, {"t": "It does not make you a paid tax preparer, and you do not need a special license called a PTIN.", "c": 4}, {"t": "A PTIN is only needed to prepare returns for OTHER people for pay.", "c": 5}], "ebook": [[14, "Your one-page tax document checklist"]]}, {"id": "m4l2", "group": "Module 4 — Put It All Together & File", "n": 2, "tag": "Teaching", "title": "The Accuracy Habit", "screen": {"e": "Module 4", "t": "The Accuracy Habit", "s": "LOOK → ENTER → COMPARE", "g": "CATCH MISTAKES BEFORE YOU SUBMIT"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "LOOK", "d": "At the document"}, {"t": "ENTER", "d": "Exactly what it says"}, {"t": "COMPARE", "d": "What you typed vs. what you expected"}, {"t": "Every document on the return?", "d": "Final check"}, {"t": "Filing status matches real life?", "d": "Final check"}, {"t": "Numbers match the documents?", "d": "Final check"}]}, "lines": [{"t": "Every lesson in this course points back to the same habit: LOOK at the document.", "c": 0}, {"t": "ENTER exactly what it says.", "c": 1}, {"t": "COMPARE what you typed to what you expected.", "c": 2}, {"t": "This habit catches the biggest mistakes — the wrong filing status, a missing document, or a typo in a number.", "c": [0, 1, 2]}, {"t": "Before Deja sends in her return, she checks one more time: Did every document show up on the return?", "c": 3}, {"t": "Does her filing status match her real life?", "c": 4}, {"t": "Do the numbers match the documents?", "c": 5}, {"t": "If something looks wrong or missing, she stops and fixes it BEFORE she files — never after.", "c": null}], "ebook": [[12, "Before you send a return, check it"], [13, "Spot the mistake"]]}, {"id": "m4l3", "group": "Module 4 — Put It All Together & File", "n": 3, "tag": "Capstone", "title": "Your Turn: Deja's Full Year", "year": "Tax year 2026", "screen": {"e": "Your Turn — Deja's Full Year · 2026", "t": "What Does She Owe — or Get Back?", "s": "W-2: $71,300 · 1099 Net Profit: $3,371 · Dependent: Mia", "g": "WHAT DOES SHE OWE — OR GET BACK?"}, "visual": {"type": "list", "variant": "ledger", "items": [{"t": "W-2 wages", "d": "$71,300"}, {"t": "1099 net profit", "d": "+ $3,371"}, {"t": "Total income", "d": "= ?"}, {"t": "Head of Household standard deduction", "d": "− $24,150"}, {"t": "Taxable income · income tax", "d": "= ?"}, {"t": "Child Tax Credit", "d": "− $2,200"}, {"t": "Self-employment tax", "d": "+ ?"}, {"t": "Compare to withholding", "d": "$6,250"}]}, "lines": [{"t": "Time to put every piece together!", "c": null}, {"t": "Deja's W-2 shows $71,300 in wages.", "c": 0}, {"t": "Her cake business added $3,371 in net profit.", "c": 1}, {"t": "She files as Head of Household and claims Mia.", "c": null}, {"t": "Add her W-2 wages and her 1099 net profit together for total income.", "c": [0, 1, 2]}, {"t": "Subtract the Head of Household standard deduction to get taxable income, then figure her tax.", "c": [3, 4]}, {"t": "Subtract the $2,200 Child Tax Credit.", "c": 5}, {"t": "Then add the self-employment tax from her net profit — that's a separate line, on top of her income tax.", "c": 6}, {"t": "Compare the total to her $6,250 withholding to find her refund or what she owes.", "c": 7}, {"t": "To keep it simple, we leave out two small business deductions that tax software adds for you — they would make her refund a little bigger.", "c": null}], "refs": [{"title": "2026 tax numbers · Head of Household", "rows": [["Standard deduction (Head of Household)", "$24,150"], ["Standard deduction (Single), to compare", "$16,100"], ["10% bracket", "$0 – $17,700"], ["12% bracket", "$17,701 – $67,450"], ["22% bracket", "$67,451 – $105,700"], ["Child Tax Credit", "$2,200 per child under 17"], ["Earned Income Tax Credit income limit (1 child)", "$51,593"]]}, {"title": "2026 side-gig numbers", "rows": [["Mileage rate, Jan 1 – Jun 30, 2026", "72.5¢ a mile"], ["Mileage rate, Jul 1 – Dec 31, 2026", "76¢ a mile"], ["Self-employment tax", "net profit × 92.35% × 15.3%"], ["1099-NEC is sent when pay reaches", "$2,000 in a year"]]}], "work": {"title": "Work it out · Deja's whole 2026 return", "given": [["W-2 wages", "$71,300"], ["1099 net profit", "$3,371"], ["Withheld", "$6,250"], ["Filing status", "Head of Household + Mia"]], "steps": [{"q": "Total income: wages + net profit", "kind": "num", "a": 74671, "tol": 0.5, "unit": "$", "how": "$71,300 + $3,371 = $74,671"}, {"q": "Taxable income: total income minus the Head of Household standard deduction", "kind": "num", "a": 50521, "tol": 0.5, "unit": "$", "how": "$74,671 − $24,150 = $50,521"}, {"q": "Income tax: 10% of the first $17,700, plus 12% of the rest (round to the dollar)", "kind": "num", "a": 5709, "tol": 1.5, "unit": "$", "how": "$17,700 × 0.10 = $1,770 · ($50,521 − $17,700) × 0.12 = $3,938.52 · total $5,708.52 → $5,709"}, {"q": "Income tax after the Child Tax Credit", "kind": "num", "a": 3509, "tol": 1.5, "unit": "$", "how": "$5,709 − $2,200 = $3,509"}, {"q": "Self-employment tax: net profit × 92.35% × 15.3% (round to the dollar)", "kind": "num", "a": 476, "tol": 1.5, "unit": "$", "how": "$3,371 × 0.9235 × 0.153 = $476.31 → $476"}, {"q": "Total tax: income tax after credit + self-employment tax", "kind": "num", "a": 3985, "tol": 2, "unit": "$", "how": "$3,509 + $476 = $3,985"}, {"q": "Refund: withholding minus total tax", "kind": "num", "a": 2265, "tol": 3, "unit": "$", "how": "$6,250 − $3,985 = $2,265 back to Deja"}], "note": "Real returns also take off half of the self-employment tax and a small-business deduction (QBI). Tax software adds both for you. We leave them out here to keep the steps simple — they would make Deja's refund a little bigger."}, "does": ["Fill in each step of the worksheet and press Check.", "Use the 2026 Head of Household numbers.", "Finish with LOOK → ENTER → COMPARE before you call it done."], "quiz": {"label": "Capstone · 5 questions", "qs": [{"q": "Deja's total income this year (W-2 plus 1099 net profit) is:", "o": ["$71,300", "$78,871", "$74,671"], "a": 2}, {"q": "After the standard deduction, her taxable income is:", "o": ["$50,521", "$47,150", "$74,671"], "a": 0}, {"q": "Which tax applies on top of regular income tax because of her 1099 income?", "o": ["None", "Self-employment tax", "Payroll tax"], "a": 1}, {"q": "After the Child Tax Credit and comparing to her withholding, Deja:", "o": ["Gets a refund", "Owes the IRS", "Breaks even exactly"], "a": 0}, {"q": "Did Deja need a PTIN to do her own return this way?", "o": ["True — a PTIN is always needed", "False — a PTIN is only needed to do OTHER people's returns for pay"], "a": 1}]}, "ebook": [[12, "Before you send a return, check it"], [14, "Your one-page tax document checklist"]]}, {"id": "m4l4", "group": "Module 4 — Put It All Together & File", "n": 4, "tag": "Final", "title": "WIN Review: Final Assessment", "screen": {"e": "WIN Review — Final Assessment", "t": "Done by Herself.", "s": "One W-2. One 1099. One dependent.", "g": "LOOK → ENTER → COMPARE, EVERY TIME"}, "visual": {"type": "list", "variant": "check", "items": [{"t": "Read a W-2", "d": "Her own paystub, first time"}, {"t": "Claim a dependent", "d": "The right way"}, {"t": "Report a 1099-NEC", "d": "Read it and report it"}, {"t": "Do her own return", "d": "Start to finish · no PTIN"}, {"t": "LOOK → ENTER → COMPARE", "d": "Every time"}, {"t": "Never guess", "d": "Stop and ask"}]}, "lines": [{"t": "Deja Marsh started this course as a W-2 employee reading her own paystub for the first time.", "c": 0}, {"t": "She's finishing it able to claim a dependent the right way, read and report a 1099-NEC, and do her own return start to finish — no business, no bookkeeping, no PTIN needed.", "c": [1, 2, 3]}, {"t": "That's the whole course in one habit: LOOK at the document.", "c": 4}, {"t": "ENTER what it actually says.", "c": 4}, {"t": "COMPARE it to what you expect.", "c": 4}, {"t": "And when something doesn't add up, stop and ask — never guess.", "c": 5}], "quiz": {"label": "Final Assessment · 6 questions", "final": true, "qs": [{"q": "A qualifying child must live with the taxpayer for:", "o": ["More than half the year", "Any amount of time", "The full year only"], "a": 0}, {"q": "Head of Household status requires paying more than half the cost of a home for:", "o": ["Any relative", "Yourself only", "A qualifying person"], "a": 2}, {"q": "In 2026, a 1099-NEC must be sent once a payer pays a contractor:", "o": ["Any amount", "$2,000 or more in a year", "$10,000 or more"], "a": 1}, {"q": "Net profit from 1099 income is subject to:", "o": ["Income tax only", "No tax until withdrawn", "Income tax and self-employment tax"], "a": 2}, {"q": "The accuracy habit taught in this course is:", "o": ["LOOK, ENTER, COMPARE", "Guess and move on", "Skip anything confusing"], "a": 0}, {"q": "Finishing this course means Deja — and you — can:", "o": ["Prepare returns for other people for pay", "Confidently do your own return with W-2 and 1099 income", "Automatically get a PTIN"], "a": 1}]}, "ebook": [[16, "You have a starting point"], [15, "Answer key"]]}];
+const DURS = {"m2l1-0": 3.03, "m2l1-1": 4.94, "m2l1-2": 4.49, "m2l1-3": 2.32, "m2l1-4": 2.64, "m2l1-5": 4.81, "m2l1-6": 1.44, "m2l1-7": 3.47, "m2l1-8": 2.77, "m2l1-9": 3.55, "m2l1-10": 1.88, "m2l1-11": 3.6, "m4l1-0": 5.93, "m4l1-1": 6.64, "m4l1-2": 3.29, "m4l1-3": 5.28, "m4l1-4": 4.1, "m4l2-0": 4.0, "m4l2-1": 1.59, "m4l2-2": 2.06, "m4l2-3": 6.35, "m4l2-4": 6.19, "m4l2-5": 2.38, "m4l2-6": 1.88, "m4l2-7": 5.09, "m4l4-0": 5.8, "m4l4-1": 11.81, "m4l4-2": 3.0, "m4l4-3": 1.46, "m4l4-4": 1.49, "m4l4-5": 3.03, "sh-0": 1.75, "sh-1": 1.44, "sh-2": 7.29, "sh-3": 1.88, "sh-4": 1.59, "sh-5": 2.48, "sh-6": 2.12, "sh-7": 2.53, "sh-8": 4.68, "sh-9": 9.22, "sh-10": 2.27, "sh-11": 2.61, "sh-12": 3.81, "sh-13": 3.06, "m1l1-0": 1.52, "m1l1-1": 2.64, "m1l1-2": 1.59, "m1l1-3": 3.06, "m1l1-4": 1.2, "m1l1-5": 4.39, "m1l1-6": 6.27, "m1l1-7": 3.53, "m1l1-8": 1.41, "m1l1-9": 5.28, "m1l1-10": 3.47, "m1l1-11": 5.75, "m1l1-12": 6.77, "m1l1-13": 4.6, "m1l2-0": 2.66, "m1l2-1": 2.01, "m1l2-2": 3.4, "m1l2-3": 3.45, "m1l2-4": 2.93, "m1l2-5": 3.03, "m1l2-6": 2.46, "m1l2-7": 3.53, "m1l2-8": 4.7, "m1l2-9": 4.44, "m1l2-10": 3.03, "m1l2-11": 2.38, "m1l2-12": 5.04, "m1l2-13": 4.62, "m1l2-14": 4.81, "m1l2-15": 5.22, "m1l3-0": 1.07, "m1l3-1": 1.52, "m1l3-2": 8.46, "m1l3-3": 3.87, "m1l3-4": 6.16, "m1l3-5": 3.5, "m1l3-6": 5.67, "m1l3-7": 4.26, "m1l3-8": 5.38, "m1l3-9": 2.77, "m1l3-10": 6.14, "m1l3-11": 1.83, "m1l3-12": 1.91, "m1l3-13": 2.8, "m1l4-0": 1.49, "m1l4-1": 2.56, "m1l4-2": 5.46, "m1l4-3": 6.56, "m1l4-4": 2.38, "m1l4-5": 4.96, "m1l4-6": 6.22, "m1l4-7": 3.11, "m2l2-0": 1.28, "m2l2-1": 2.06, "m2l2-2": 1.57, "m2l2-3": 3.6, "m2l2-4": 5.36, "m2l2-5": 8.05, "m2l2-6": 2.87, "m2l2-7": 3.16, "m2l2-8": 2.38, "m2l2-9": 2.95, "m2l2-10": 2.95, "m2l3-0": 1.07, "m2l3-1": 9.93, "m2l3-2": 2.9, "m2l3-3": 5.85, "m2l3-4": 2.85, "m2l3-5": 1.1, "m2l3-6": 5.28, "m2l3-7": 2.95, "m2l3-8": 4.81, "m2l4-0": 8.18, "m2l4-1": 2.14, "m2l4-2": 14.58, "m2l4-3": 6.32, "m2l4-4": 1.96, "m3l1-0": 4.55, "m3l1-1": 6.5, "m3l1-2": 7.89, "m3l1-3": 6.69, "m3l1-4": 3.87, "m3l1-5": 4.7, "m3l2-0": 3.71, "m3l2-1": 6.19, "m3l2-2": 5.15, "m3l2-3": 3.03, "m3l2-4": 3.89, "m3l2-5": 7.26, "m3l2-6": 11.7, "m3l2-7": 1.99, "m3l3-0": 4.94, "m3l3-1": 10.16, "m3l3-2": 11.94, "m3l3-3": 7.84, "m3l3-4": 6.79, "m3l4-0": 11.52, "m3l4-1": 8.86, "m3l4-2": 11.13, "m3l4-3": 3.29, "m4l3-0": 1.72, "m4l3-1": 4.73, "m4l3-2": 5.15, "m4l3-3": 2.4, "m4l3-4": 5.17, "m4l3-5": 5.49, "m4l3-6": 3.53, "m4l3-7": 5.8, "m4l3-8": 6.66, "m4l3-9": 7.58};
+const GAP = 0.45;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = s => { s = Math.max(0, Math.round(s)); return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); };
+const PLAY = '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+const PAUSE = '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
+
+/* ---------- progress (per viewer) ---------- */
+const KEY = "win-beginner-v1";
+let saved = {done:[], last:"sh"};
+try { const r = JSON.parse(localStorage.getItem(KEY) || "null"); if(r && Array.isArray(r.done)) saved = r; } catch(e) {}
+const done = new Set(saved.done);
+function persist(){ try { localStorage.setItem(KEY, JSON.stringify({done:[...done], last:COURSE[idx].id})); } catch(e) {} }
+
+/* ---------- timelines ---------- */
+COURSE.forEach(l => {
+  let t = 0;
+  l.tl = l.lines.map((x, i) => { const d = (DURS[l.id + "-" + i] || Math.max(1.8, x.t.split(/\s+/).length/2.4)) + GAP; const o = {t:x.t, c:x.c, i, start:t, dur:d}; t += d; return o; });
+  l.total = t;
+});
+
+/* ---------- sidebar ---------- */
+function renderMap(){
+  const map = $("map"); map.innerHTML = ""; let group = null;
+  COURSE.forEach((l, i) => {
+    if(l.group !== group){ group = l.group; const h = document.createElement("div"); h.className = "m-head"; h.textContent = group; map.appendChild(h); }
+    const b = document.createElement("button"); b.type = "button";
+    b.className = "l-btn" + (i === idx ? " on" : "") + (done.has(l.id) ? " done" : "");
+    b.innerHTML = '<span class="dot">' + (done.has(l.id) ? "✓" : (l.n || "★")) + '</span><span class="lt">' + esc(l.title) + '<span class="lg">' + esc(l.tag) + '</span></span>';
+    if(i === idx) b.setAttribute("aria-current", "page");
+    b.onclick = () => { go(i); document.body.classList.remove("nav"); };
+    map.appendChild(b);
+  });
+  const pct = Math.round(done.size / COURSE.length * 100);
+  $("progPct").textContent = pct + "%"; $("progFill").style.width = pct + "%";
+}
+
+/* ---------- stage visuals ---------- */
+function renderVisual(l){
+  const v = l.visual, vis = $("vis");
+  if(v.type === "form"){
+    const box = b => '<div class="bx" data-k="' + b[0] + '"><div class="lb"><span class="nm">' + esc(b[0]) + '</span>' + esc(b[1]) + '</div><div class="vl">' + esc(b[2]) + '</div></div>';
+    const note = n => '<div class="bx note" data-k="' + n[0] + '"><div class="lb">' + esc(n[1]) + '</div><div class="vl">' + esc(n[2]) + '</div></div>';
+    vis.innerHTML = '<div class="form" id="vObj"><div class="f-head"><div class="f-title">' + esc(v.kind) + '<small>' + esc(v.label) + '</small></div><div class="f-who">' + (v.payer ? "Payer: " + esc(v.payer) : "Employee") + '<b>' + esc(v.who) + '</b></div></div>' +
+      '<div class="f-grid">' + v.boxes.map(box).join("") + '</div>' + (v.notes && v.notes.length ? '<div class="f-notes">' + v.notes.map(note).join("") + '</div>' : "") + '</div>';
+  } else {
+    const n = v.items.length, cols = n === 4 ? 2 : 3;
+    vis.innerHTML = '<div class="lst ' + v.variant + (v.variant === "ledger" && n > 6 ? " many" : "") + (v.variant === "flow" && n > 4 ? " wide" : "") + '" id="vObj" style="--cols:' + cols + '">' + v.items.map((it, i) =>
+      '<div class="it" data-k="' + i + '">' + (v.variant === "check" ? '<span class="ck">✓</span>' : "") + '<span class="t">' + esc(it.t) + '</span>' + (it.d ? '<span class="d">' + esc(it.d) + '</span>' : "") + '</div>').join("") + '</div>';
+  }
+}
+function titleCard(l){
+  const s = l.screen;
+  $("vis").innerHTML = '<div class="tc"><div class="tc-e">' + esc(s.e) + '</div><div class="tc-t">' + esc(s.t) + '</div>' + (s.s ? '<div class="tc-s">' + esc(s.s) + '</div>' : "") + (s.g ? '<div class="tc-g">' + esc(s.g) + '</div>' : "") + '</div>';
+  visMode = "title";
+}
+const cueKeys = c => c == null ? [] : (Array.isArray(c) ? c : [c]).map(String);
+let visMode = "title";
+function showLine(i){
+  const l = COURSE[idx], L = l.tl[i];
+  $("caption").textContent = L.t;
+  const firstCue = l.tl.findIndex(x => x.c != null);
+  if(firstCue < 0 || i < firstCue){ if(visMode !== "title") titleCard(l); }
+  else {
+    if(visMode !== "vis"){ renderVisual(l); visMode = "vis"; }
+    const now = cueKeys(L.c), seen = new Set();
+    l.tl.slice(0, i).forEach(x => cueKeys(x.c).forEach(k => seen.add(k)));
+    const obj = $("vObj");
+    obj.classList.toggle("focus", now.length > 0);
+    obj.querySelectorAll("[data-k]").forEach(el => { el.classList.toggle("on", now.includes(el.dataset.k)); el.classList.toggle("seen", seen.has(el.dataset.k)); });
+  }
+  $("tl").querySelectorAll("button").forEach((b, bi) => b.classList.toggle("on", bi === i));
+}
+
+/* ---------- playback ---------- */
+const au = new Audio(); au.preload = "auto";
+let idx = 0, cur = -1, playing = false, soundOn = true, lineStartedAt = 0, finished = false;
+function playClip(i){ au.src = "beginner/voice/" + COURSE[idx].id + "-" + i + ".mp3"; au.muted = !soundOn; au.play().catch(() => {}); }
+function seekLine(i){
+  const tl = COURSE[idx].tl;
+  cur = Math.max(0, Math.min(tl.length - 1, i)); finished = false; lineStartedAt = performance.now();
+  showLine(cur);
+  if(playing) playClip(cur); else au.pause();
+}
+function next(){ if(cur < COURSE[idx].tl.length - 1) seekLine(cur + 1); else end(); }
+function end(){
+  playing = false; finished = true; au.pause(); updateUI();
+  $("oTitle").textContent = "Video complete"; $("oSub").textContent = "Replay, or keep going below";
+  $("overlay").hidden = false;
+}
+function play(){
+  if(finished || cur < 0){ cur = -1; seekLine(0); }
+  playing = true; $("overlay").hidden = true; lineStartedAt = performance.now(); playClip(cur); updateUI();
+}
+function pause(){ playing = false; au.pause(); updateUI(); }
+function stop(){ playing = false; au.pause(); cur = -1; finished = false; updateUI(); }
+function updateUI(){
+  $("playBtn").innerHTML = playing ? PAUSE : PLAY;
+  $("playBtn").setAttribute("aria-label", playing ? "Pause" : "Play");
+  $("stage").classList.toggle("talking", playing);
+}
+function tick(){
+  const l = COURSE[idx];
+  if(cur >= 0){
+    const L = l.tl[cur], el = playing ? (performance.now() - lineStartedAt)/1000 : 0;
+    if(playing && el >= L.dur) next();
+    const pos = finished ? l.total : L.start + Math.min(el, L.dur);
+    $("fill").style.width = (pos / l.total * 100) + "%";
+    $("time").textContent = fmt(pos) + " / " + fmt(l.total);
+    $("track").setAttribute("aria-valuenow", Math.round(pos));
+  } else { $("fill").style.width = "0%"; $("time").textContent = "0:00 / " + fmt(l.total); }
+  requestAnimationFrame(tick);
+}
+function seekAt(x){
+  const l = COURSE[idx], r = $("track").getBoundingClientRect();
+  const pos = Math.max(0, Math.min(1, (x - r.left) / r.width)) * l.total;
+  let i = l.tl.findIndex(t => pos < t.start + t.dur); if(i < 0) i = l.tl.length - 1;
+  $("overlay").hidden = true; seekLine(i);
+}
+
+/* ---------- quiz ---------- */
+let picked = [], checked = false;
+function renderQuiz(){
+  const l = COURSE[idx], qz = l.quiz;
+  $("quizCard").hidden = !qz; if(!qz) return;
+  $("quizLabel").textContent = qz.label;
+  let right = 0;
+  $("quiz").innerHTML = qz.qs.map((q, qi) => {
+    if(checked && picked[qi] === q.a) right++;
+    const opts = q.o.map((o, oi) => {
+      let c = "opt"; if(checked && oi === q.a) c += " right"; else if(checked && oi === picked[qi]) c += " wrong";
+      return '<label class="' + c + '"><input type="radio" id="' + l.id + 'q' + qi + 'o' + oi + '" name="' + l.id + 'q' + qi + '" data-q="' + qi + '" data-o="' + oi + '"' + (picked[qi] === oi ? " checked" : "") + (checked ? " disabled" : "") + '><b>' + "ABCDEF"[oi] + '</b>' + esc(o) + '</label>';
+    }).join("");
+    const fb = !checked ? "" : (picked[qi] === q.a ? '<div class="fb good">Correct.</div>' : '<div class="fb bad">Not quite. The answer is ' + "ABCDEF"[q.a] + ': ' + esc(q.o[q.a]) + '.</div>');
+    return '<div class="q"><div class="q-t">' + (qi + 1) + ". " + esc(q.q) + '</div><div class="opts">' + opts + '</div>' + fb + '</div>';
+  }).join("");
+  $("checkBtn").hidden = checked; $("retryBtn").hidden = !checked;
+  $("checkBtn").disabled = picked.length < qz.qs.length || picked.some(p => p == null);
+  $("score").innerHTML = checked ? "You got <b>" + right + " of " + qz.qs.length + "</b>." : "Answer every question, then check.";
+  if(checked && qz.final){ showDone(right, qz.qs.length); }
+}
+$("quiz").addEventListener("change", e => { const t = e.target; if(t.dataset.q == null) return; picked[+t.dataset.q] = +t.dataset.o; renderQuiz(); });
+$("checkBtn").onclick = () => { checked = true; renderQuiz(); };
+$("retryBtn").onclick = () => { checked = false; picked = []; $("doneCard").hidden = true; renderQuiz(); };
+function showDone(right, total){
+  done.add(COURSE[idx].id); persist(); renderMap();
+  const all = COURSE.every(l => done.has(l.id));
+  $("doneText").textContent = "Final Assessment: " + right + " of " + total + ". " + (all ? "Every lesson is complete. " : "Finish any lessons left in the course map to complete the tier. ") + "Keep Learning. Keep Building. Keep Winning.™";
+  $("doneCard").hidden = false;
+}
+
+/* ---------- worksheet ---------- */
+const money = n => (Math.round(n * 100) / 100).toLocaleString("en-US", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
+let ws = [];
+function renderRefs(l){
+  $("refCard").hidden = !l.refs;
+  $("refs").innerHTML = (l.refs || []).map(r => '<div class="ref"><h3>' + esc(r.title) + '</h3><table>' + r.rows.map(x => '<tr><td>' + esc(x[0]) + '</td><td>' + esc(x[1]) + '</td></tr>').join("") + '</table></div>').join("");
+}
+function renderWork(l){
+  const w = l.work; $("workCard").hidden = !w; if(!w) return;
+  ws = w.steps.map(() => ({ok:false, tries:0, pick:null, val:"", how:false, fb:""}));
+  $("workTitle").textContent = w.title;
+  $("given").innerHTML = w.given.map(g => '<div><dt>' + esc(g[0]) + '</dt><dd>' + esc(g[1]) + '</dd></div>').join("");
+  $("wkNote").hidden = !w.note; $("wkNote").textContent = w.note || "";
+  drawSteps();
+}
+function drawSteps(){
+  const l = COURSE[idx], w = l.work;
+  $("steps").innerHTML = w.steps.map((st, i) => {
+    const s = ws[i]; let ans;
+    if(st.kind === "num"){
+      ans = '<label class="amt">' + (st.unit === "$" ? '<span>$</span>' : '') + '<input id="' + l.id + 'w' + i + '" data-w="' + i + '" inputmode="decimal" autocomplete="off" aria-label="Your answer" value="' + esc(s.val) + '"' + (s.ok ? " disabled" : "") + '>' + (st.unit === "%" ? '<span class="u">%</span>' : '') + '</label>';
+    } else {
+      ans = st.o.map((o, oi) => '<button type="button" class="ch" data-w="' + i + '" data-c="' + oi + '" aria-pressed="' + (s.pick === oi) + '"' + (s.ok ? " disabled" : "") + '>' + esc(o) + '</button>').join("");
+    }
+    return '<li class="st' + (s.ok ? " ok" : "") + '"><div class="st-q">' + esc(st.q) + '</div><div class="st-a">' + ans +
+      (s.ok ? "" : '<button type="button" class="btn sm" data-check="' + i + '">Check</button>') +
+      (s.how ? "" : '<button type="button" class="link" data-how="' + i + '">Show how</button>') + '</div>' +
+      (s.fb ? '<div class="st-fb ' + (s.ok ? "good" : "bad") + '">' + esc(s.fb) + '</div>' : "") +
+      (s.how ? '<div class="st-how">' + esc(st.how) + '</div>' : "") + '</li>';
+  }).join("");
+  const n = ws.filter(s => s.ok).length;
+  $("wkSum").innerHTML = n === ws.length ? "<b>All " + n + " steps correct.</b> That's LOOK → ENTER → COMPARE in action." : "<b>" + n + " of " + ws.length + "</b> steps correct. Work top to bottom — each answer feeds the next.";
+}
+function checkStep(i){
+  const st = COURSE[idx].work.steps[i], s = ws[i];
+  if(st.kind === "num"){
+    const raw = (document.querySelector('[data-w="' + i + '"]') || {}).value || "";
+    s.val = raw; const v = parseFloat(raw.replace(/[$,%\s]/g, ""));
+    if(isNaN(v)){ s.fb = "Type a number first."; drawSteps(); return; }
+    s.ok = Math.abs(v - st.a) <= st.tol;
+  } else {
+    if(s.pick == null){ s.fb = "Pick an answer first."; drawSteps(); return; }
+    s.ok = s.pick === st.a;
+  }
+  s.tries++;
+  if(s.ok){ s.fb = "Correct" + (st.kind === "num" ? ": " + (st.unit === "%" ? st.a + "%" : "$" + money(st.a)) : "") + "."; s.how = true; }
+  else s.fb = s.tries >= 2 ? "Not yet. Tap Show how to see the math." : "Not yet. Check the tax numbers and try again.";
+  drawSteps();
+  if(s.ok){ const nx = document.querySelector('.st:not(.ok) input, .st:not(.ok) .ch'); if(nx) nx.focus({preventScroll:true}); }
+}
+$("steps").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.check != null) checkStep(+b.dataset.check);
+  else if(b.dataset.how != null){ ws[+b.dataset.how].how = true; drawSteps(); }
+  else if(b.dataset.c != null){ ws[+b.dataset.w].pick = +b.dataset.c; ws[+b.dataset.w].fb = ""; drawSteps(); }
+});
+$("steps").addEventListener("input", e => { const t = e.target; if(t.dataset.w != null) ws[+t.dataset.w].val = t.value; });
+$("steps").addEventListener("keydown", e => { const t = e.target; if(e.key === "Enter" && t.dataset.w != null){ e.preventDefault(); checkStep(+t.dataset.w); } });
+
+/* ---------- lesson ---------- */
+const METHOD = {Welcome:[0,1], Teaching:[0,1], Practice:[2], Capstone:[2], "WIN Review":[3], Final:[3]};
+function go(i){
+  stop(); idx = Math.max(0, Math.min(COURSE.length - 1, i));
+  const l = COURSE[idx];
+  $("crumb").innerHTML = "<b>" + esc(l.group) + "</b> · " + esc(l.title);
+  $("eyebrow").textContent = l.group + (l.n ? " · Lesson " + l.n : "") + " · " + l.tag;
+  $("title").textContent = l.title;
+  const on = METHOD[l.tag] || [];
+  $("method").innerHTML = ["Watch","Watch me","You do it","Check it"].map((m, mi) => '<span class="' + (on.includes(mi) ? "on" : "off") + '">' + m + '</span>').join("<i>→</i>");
+  $("sTag").textContent = l.n ? l.group.split(" — ")[0] + " · Lesson " + l.n : "Start Here";
+  titleCard(l);
+  $("caption").textContent = l.tl[0].t;
+  $("tl").innerHTML = l.tl.map((x, xi) => '<button type="button" data-i="' + xi + '">' + esc(x.t) + '</button>').join("");
+  $("oTitle").textContent = "Play the lesson"; $("oSub").textContent = fmt(l.total) + " · sound on"; $("overlay").hidden = false;
+  $("track").setAttribute("aria-valuemax", Math.round(l.total));
+  $("doesCard").hidden = !l.does; $("does").innerHTML = (l.does || []).map(d => "<li>" + esc(d) + "</li>").join("");
+  $("yr").hidden = !l.year; $("yr").textContent = l.year || "";
+  renderWork(l); renderRefs(l);
+  $("ebookCard").hidden = !l.ebook;
+  $("ebPages").innerHTML = (l.ebook || []).map(e => '<a class="eb-pg" href="beginner/ebook.pdf#page=' + e[0] + '" target="_blank" rel="noopener"><b>Page ' + e[0] + '</b><span>' + esc(e[1]) + '</span><i>Open ↗</i></a>').join("");
+  picked = []; checked = false; $("doneCard").hidden = true; renderQuiz();
+  $("prevBtn").disabled = idx === 0;
+  $("nextBtn").textContent = idx === COURSE.length - 1 ? "Mark complete" : "Mark complete & next →";
+  $("pos").textContent = "Lesson " + (idx + 1) + " of " + COURSE.length;
+  renderMap(); persist();
+  window.scrollTo({top:0});
+}
+$("tl").addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return; $("overlay").hidden = true; if(!playing){ playing = true; updateUI(); } seekLine(+b.dataset.i); });
+$("playBtn").onclick = () => playing ? pause() : play();
+$("overlay").onclick = play;
+$("voiceBtn").onclick = () => { soundOn = !soundOn; au.muted = !soundOn; $("voiceBtn").textContent = soundOn ? "Sound on" : "Sound off"; $("voiceBtn").setAttribute("aria-pressed", String(soundOn)); };
+$("track").addEventListener("click", e => seekAt(e.clientX));
+$("track").addEventListener("keydown", e => {
+  if(e.key === "ArrowRight"){ $("overlay").hidden = true; seekLine(cur + 1); e.preventDefault(); }
+  if(e.key === "ArrowLeft"){ $("overlay").hidden = true; seekLine(cur - 1); e.preventDefault(); }
+});
+$("prevBtn").onclick = () => go(idx - 1);
+$("nextBtn").onclick = () => { done.add(COURSE[idx].id); persist(); if(idx < COURSE.length - 1) go(idx + 1); else renderMap(); };
+$("menuBtn").onclick = () => document.body.classList.add("nav");
+$("scrim").onclick = () => document.body.classList.remove("nav");
+
+/* ---------- eBook download ---------- */
+let dlCap = null;
+if(window.claude && typeof window.claude.use === "function"){ window.claude.use("downloads").then(d => { dlCap = d; }).catch(() => {}); }
+let toastT = 0;
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 3200); }
+document.addEventListener("click", async e => {
+  const a = e.target.closest(".js-dl"); if(!a || !dlCap) return;
+  e.preventDefault();
+  try {
+    const blob = await (await fetch("beginner/ebook.pdf")).blob();
+    await dlCap.save({filename:"WIN-at-Taxes-Visual-eBook.pdf", data:blob});
+    toast("eBook saved");
+  } catch(err) {
+    if(err && err.code === "declined") return;
+    window.open("beginner/ebook.pdf", "_blank");
+  }
+});
+
+const fromHash = COURSE.findIndex(l => "#" + l.id === location.hash);
+const fromSaved = COURSE.findIndex(l => l.id === saved.last);
+go(fromHash >= 0 ? fromHash : (fromSaved >= 0 ? fromSaved : 0));
+window.addEventListener("hashchange", () => { const h = COURSE.findIndex(l => "#" + l.id === location.hash); if(h >= 0 && h !== idx) go(h); });
+requestAnimationFrame(tick);
+</script>
+
 </body>
 </html>
