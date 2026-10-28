@@ -546,6 +546,8 @@ function play(){
 function pause(){ if(useTimer) timerBase = pos(); playing = false; au.pause(); updateUI(); }
 function stop(){ playing = false; au.pause(); au.removeAttribute("src"); au.load(); cur = -1; finished = false; useTimer = false; updateUI(); }
 au.addEventListener("ended", () => { if(playing) end(); });
+/* keeps captions in step even when the screen is locked or the tab is in the background */
+au.addEventListener("timeupdate", () => { if(playing && cur >= 0 && !useTimer){ const i = lineAt(au.currentTime); if(i !== cur){ cur = i; showLine(cur); } } });
 au.addEventListener("error", () => { if(au.getAttribute("src") && playing && !useTimer){ useTimer = true; timerBase = COURSE[idx].tl[Math.max(cur, 0)].start; timerAt = performance.now(); } });
 function updateUI(){
   $("playBtn").innerHTML = playing ? PAUSE : PLAY;
